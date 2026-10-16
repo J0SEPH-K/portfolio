@@ -1,6 +1,6 @@
 /* Vision QC — an instrument, not a dashboard: one big view, a thin rail, mono labels */
 body { font-size: 14px; background: var(--bg); }
-.mono { font-size: 11px; }
+.mono { font-size: 14px; }
 .bar {
   position: sticky; top: 0; z-index: 10;
   display: flex; align-items: center; gap: 24px; height: 52px; padding: 0 16px;
@@ -13,7 +13,7 @@ body { font-size: 14px; background: var(--bg); }
 .bar__title .mono { color: var(--fg-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .bar__stats { margin-left: auto; display: flex; align-items: center; gap: 18px; color: var(--fg-3); white-space: nowrap; }
 .bar__stats b { color: var(--fg); font-weight: 500; font-variant-numeric: tabular-nums; }
-.run { display: inline-flex; align-items: center; gap: 8px; height: 26px; padding: 0 10px; border: 1px solid var(--line-2); border-radius: 999px; color: var(--fg-2); font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.run { display: inline-flex; align-items: center; gap: 8px; height: 26px; padding: 0 10px; border: 1px solid var(--line-2); border-radius: 999px; color: var(--fg-2); font-family: var(--f-mono); font-size: 14px; letter-spacing: 0; }
 .run i { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 8px var(--ok); }
 .run[aria-pressed="false"] i { background: var(--warn); box-shadow: 0 0 8px var(--warn); }
 .run:hover { border-color: var(--fg-2); color: var(--fg); }
@@ -34,7 +34,7 @@ body { font-size: 14px; background: var(--bg); }
 .strip button::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--ok); }
 .strip button.ng::after { background: var(--warn); }
 .strip button.is-cur { border-color: var(--accent); }
-.strip button span { position: absolute; top: 3px; left: 4px; font-family: var(--f-mono); font-size: 9px; color: var(--fg-2); text-shadow: 0 0 4px #000; }
+.strip button span { position: absolute; top: 3px; left: 4px; font-family: var(--f-mono); font-size: 13px; color: var(--fg-2); text-shadow: 0 0 4px #000; }
 
 .rail { display: flex; flex-direction: column; min-height: 0; overflow-y: auto; }
 .block { padding: 14px 16px; border-bottom: 1px solid var(--line); }
@@ -57,12 +57,12 @@ input[type="range"] { width: 100%; accent-color: var(--accent); margin: 0; }
 .pr__legend i.p { background: var(--accent); } .pr__legend i.r { background: #c9b8ff; }
 
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-.chip { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 9px; border: 1px solid var(--line-2); border-radius: 4px; font-family: var(--f-mono); font-size: 10.5px; color: var(--fg-2); transition: opacity .2s; }
+.chip { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 9px; border: 1px solid var(--line-2); border-radius: 4px; font-family: var(--f-mono); font-size: 13px; color: var(--fg-2); transition: opacity .2s; }
 .chip i { width: 8px; height: 8px; border-radius: 2px; }
 .chip[aria-pressed="false"] { opacity: .35; }
 
 .dets { list-style: none; margin: 0; padding: 0; overflow-y: auto; flex: 1; }
-.dets li { display: grid; grid-template-columns: 9px minmax(0, 1fr) auto auto; gap: 10px; align-items: center; padding: 7px 4px; border-bottom: 1px solid var(--line); font-family: var(--f-mono); font-size: 11px; cursor: pointer; }
+.dets li { display: grid; grid-template-columns: 9px minmax(0, 1fr) auto auto; gap: 10px; align-items: center; padding: 7px 4px; border-bottom: 1px solid var(--line); font-family: var(--f-mono); font-size: 14px; cursor: pointer; }
 .dets li:hover, .dets li.is-hot { background: var(--bg-3); }
 .dets li i { width: 8px; height: 8px; border-radius: 2px; }
 .dets li .f { color: var(--fg-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

@@ -28,7 +28,7 @@ button.chip:hover { border-color: var(--fg-2); color: var(--fg); }
 .card { background: var(--bg-2); border: 1px solid var(--line); padding: 14px; min-width: 0; }
 .card__label { margin: 0 0 10px; color: var(--fg-2); display: flex; justify-content: space-between; gap: 8px; }
 .card__label b { color: var(--accent); font-weight: 500; }
-.hint { margin: 8px 0 0; color: var(--fg-3); font-size: 12px; line-height: 1.5; word-break: keep-all; }
+.hint { margin: 8px 0 0; color: var(--fg-3); font-size: 14px; line-height: 1.5; word-break: keep-all; }
 
 input[type="range"] { width: 100%; accent-color: var(--accent); }
 input[type="text"], input[type="search"], select, textarea {

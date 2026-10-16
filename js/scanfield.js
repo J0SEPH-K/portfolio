@@ -3,7 +3,7 @@
 window.ScanField = function ScanField(canvas, opts = {}) {
   const ctx = canvas.getContext("2d");
   const ACCENT = opts.accent || "#d4ff3a";
-  const LABELS = ["SCRATCH", "PARTICLE", "MURA", "DENT", "PINHOLE", "BUBBLE"];
+  const LABELS = ["Scratch", "Particle", "Mura", "Dent", "Pinhole", "Bubble"];
   let w = 0, h = 0, dpr = 1;
   let defects = [];
   let scanY = 0;
@@ -103,7 +103,7 @@ window.ScanField = function ScanField(canvas, opts = {}) {
     ctx.moveTo(R, B - c); ctx.lineTo(R, B); ctx.lineTo(R - c, B);
     ctx.moveTo(L + c, B); ctx.lineTo(L, B); ctx.lineTo(L, B - c);
     ctx.stroke();
-    ctx.font = "500 10px 'JetBrains Mono', monospace";
+    ctx.font = "500 13px Archivo, 'IBM Plex Sans KR', sans-serif";
     const text = `${d.label} ${d.conf}`;
     const tw = ctx.measureText(text).width;
     ctx.fillStyle = ACCENT;

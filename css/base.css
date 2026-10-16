@@ -17,7 +17,8 @@
 
   --f-display: "Archivo", "IBM Plex Sans KR", system-ui, sans-serif;
   --f-body: "IBM Plex Sans KR", "Archivo", system-ui, sans-serif;
-  --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  /* labels: the display face at text width, sentence case, never tiny (no monospace "terminal" labels) */
+  --f-mono: "Archivo", "IBM Plex Sans KR", system-ui, sans-serif;
 
   --gutter: clamp(16px, 2.4vw, 36px);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -44,9 +45,10 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 .mono {
   font-family: var(--f-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
 }
 .mono-sq::before {
   content: "";
@@ -58,10 +60,10 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 }
 .pill {
   display: inline-flex; align-items: center; gap: 8px;
-  height: 30px; padding: 0 14px;
+  height: 36px; padding: 0 16px;
   border: 1px solid var(--line-2);
   border-radius: 999px;
-  font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  font-family: var(--f-mono); font-size: 14px; letter-spacing: 0;
   transition: background .25s, color .25s, border-color .25s;
 }
 .pill:hover, .pill:focus-visible { background: var(--fg); color: var(--bg); border-color: var(--fg); outline: none; }

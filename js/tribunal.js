@@ -104,7 +104,7 @@ window.Tribunal = function Tribunal(section) {
   /* ---------- draw helpers ---------- */
   const label = (x, y, text, color, alpha, align = "left") => {
     if (alpha < 0.02) return;
-    g.font = "500 11px 'JetBrains Mono', monospace";
+    g.font = "500 14px Archivo, 'IBM Plex Sans KR', sans-serif";
     g.textAlign = align;
     g.fillStyle = `rgba(${color},${alpha.toFixed(3)})`;
     g.fillText(text, x, y);
@@ -211,7 +211,7 @@ window.Tribunal = function Tribunal(section) {
       g.fillStyle = `rgba(${c},${al.toFixed(3)})`;
       g.fillRect(s.x - sz / 2, s.y - sz / 2, sz, sz);
     });
-    label(ox, oy + gh + 12, "SOURCES · 논문 · 공공데이터 · 문서 · 원문", INK, 0.5);
+    label(ox, oy + gh + 12, "Sources · 논문 · 공공데이터 · 문서 · 원문", INK, 0.5);
 
     // research rays
     for (let i = rays.length - 1; i >= 0; i--) {
@@ -244,7 +244,7 @@ window.Tribunal = function Tribunal(section) {
           else {
             const k = 5;
             line(mx - k, my - k, mx + k, my + k, WARN, fade, 1.5); line(mx + k, my - k, mx - k, my + k, WARN, fade, 1.5);
-            label(mx + 9, my - 6, "NO SOURCE · STRUCK", WARN, fade);
+            label(mx + 9, my - 6, "출처 없음 · 기각", WARN, fade);
             label(tx, ty + 4, "?", WARN, 0.8 * fade, "center");
           }
         }
@@ -293,23 +293,23 @@ window.Tribunal = function Tribunal(section) {
       const w = agents[WIN];
       line(sup.x, sup.y, lerp(sup.x, w.x, f), lerp(sup.y, w.y, f), OLIVE, 0.9, 1.6);
       bracket(w.x, w.y, 16 + (1 - f) * 20, OLIVE, f);
-      label(w.x, w.y + 46, "WINNER", OLIVE, f, "center");
+      label(w.x, w.y + 46, "Winner", OLIVE, f, "center");
     }
 
     // nodes
     g.fillStyle = `rgba(${INK},${you.a})`;
     g.strokeStyle = `rgba(${INK},${you.a})`; g.lineWidth = 1.25;
     g.strokeRect(you.x - 5, you.y - 5, 10, 10);
-    label(you.x, you.y - 14, narrow ? "YOU" : "YOU · 브리프", INK, you.a, narrow ? "left" : "center");
+    label(you.x, you.y - 14, narrow ? "You" : "You · 브리프", INK, you.a, narrow ? "left" : "center");
 
     g.save(); g.translate(sup.x, sup.y); g.rotate(Math.PI / 4);
     g.fillStyle = `rgba(${INK},${sup.a})`; g.fillRect(-7, -7, 14, 14);
     g.restore();
-    label(sup.x, sup.y - 16, "SUPER JUDGE", INK, sup.a, "center");
+    label(sup.x, sup.y - 16, "Super Judge", INK, sup.a, "center");
 
     judges.forEach(j => {
       g.fillStyle = `rgba(${INK},${j.a})`; g.fillRect(j.x - 5, j.y - 5, 10, 10);
-      label(j.x, j.y - 13, "JUDGE " + "ABC"[j.i], INK, j.a, "center");
+      label(j.x, j.y - 13, "Judge " + "ABC"[j.i], INK, j.a, "center");
     });
 
     agents.forEach(a => {
@@ -320,10 +320,10 @@ window.Tribunal = function Tribunal(section) {
       if (a.tool > 0) {
         const tx = a.x + 11, ty = a.y - 11, k = 3.5 * a.tool;
         line(tx - k, ty, tx + k, ty, OLIVE, a.a, 1.5); line(tx, ty - k, tx, ty + k, OLIVE, a.a, 1.5);
-        if (phase === 1) label(tx + 6, ty - 4, "NEW SKILL", OLIVE, a.tool * 0.9);
+        if (phase === 1) label(tx + 6, ty - 4, "New skill", OLIVE, a.tool * 0.9);
       }
       const near = a.s > 1.25;
-      if (!narrow || near || (phase === 5 && a.i === WIN)) label(a.x, a.y + Math.max(20, r + 24), "AGENT 0" + (a.i + 1), INK, Math.min(1, a.a * (near ? 1 : 0.55)), "center");
+      if (!narrow || near || (phase === 5 && a.i === WIN)) label(a.x, a.y + Math.max(20, r + 24), "Agent 0" + (a.i + 1), INK, Math.min(1, a.a * (near ? 1 : 0.55)), "center");
     });
 
     setText(statusEl, STATUS[phase]());

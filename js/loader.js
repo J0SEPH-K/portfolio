@@ -9,7 +9,7 @@ window.Loader = function Loader(root, slot) {
   root.prepend(canvas);
   const g = canvas.getContext("2d");
   const ACC = "212,255,58", PAPER = "236,236,228";
-  const LABELS = ["SCRATCH", "PARTICLE", "MURA", "DENT", "PINHOLE", "BUBBLE"];
+  const LABELS = ["Scratch", "Particle", "Mura", "Dent", "Pinhole", "Bubble"];
   const STEP = 36;                                   // same pitch + origin as the hero field
   let W = 0, H = 0, dpr = 1, alive = true, t0 = performance.now();
   const R = { x: 0, y: 0, w: 0, h: 0, open: 0, count: 0 };   // open: 0 tile → 1 full screen
@@ -56,7 +56,7 @@ window.Loader = function Loader(root, slot) {
     g.moveTo(Rr, B - c); g.lineTo(Rr, B); g.lineTo(Rr - c, B);
     g.moveTo(L + c, B); g.lineTo(L, B); g.lineTo(L, B - c);
     g.stroke();
-    g.font = "500 10px 'JetBrains Mono', monospace";
+    g.font = "500 13px Archivo, 'IBM Plex Sans KR', sans-serif";
     const text = `${d.label} ${d.conf}`, tw = g.measureText(text).width;
     g.fillStyle = `rgb(${ACC})`; g.fillRect(L, T - 16, tw + 10, 14);
     g.fillStyle = "#0b0d02"; g.fillText(text, L + 5, T - 5.5);
@@ -108,7 +108,7 @@ window.Loader = function Loader(root, slot) {
       if (lift > 0.02) {
         g.strokeStyle = `rgba(${PAPER},${(0.22 * lift).toFixed(3)})`; g.lineWidth = 1;
         g.strokeRect(R.x + 0.5, R.y + 0.5, R.w - 1, R.h - 1);
-        g.font = "500 11px 'JetBrains Mono', monospace";
+        g.font = "500 14px Archivo, 'IBM Plex Sans KR', sans-serif";
         g.fillStyle = `rgba(${ACC},${lift.toFixed(3)})`;
         g.textAlign = "right";
         g.fillText(String(Math.round(R.count)).padStart(3, "0"), R.x + R.w - 8, R.y + R.h - 8);

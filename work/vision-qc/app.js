@@ -7,6 +7,7 @@
   if (location.hash === "#embed") document.documentElement.classList.add("is-embed");
 
   const W = 1200, H = 750;
+  const NAME = { SCRATCH: "Scratch", DEAD_PX: "Dead pixel", PARTICLE: "Particle", BUBBLE: "Bubble", MURA: "Mura" };
   const CLASSES = [
     { id: "SCRATCH", ko: "스크래치", color: "#ff6b3d", critical: true },
     { id: "DEAD_PX", ko: "불량 화소", color: "#ff3d7f", critical: true },
@@ -19,7 +20,7 @@
   let tau = 0.75;
 
   /* ---------- detector worker ---------- */
-  const worker = new Worker("detector.js?v=10161955");
+  const worker = new Worker("detector.js?v=10162030");
   let jobId = 0;
   const pending = new Map();
   worker.onmessage = e => { const r = pending.get(e.data.id); pending.delete(e.data.id); r && r(e.data); };
@@ -174,8 +175,8 @@
       ctx.moveTo(x + k, y + h); ctx.lineTo(x, y + h); ctx.lineTo(x, y + h - k);
       ctx.stroke();
       ctx.setLineDash([]);
-      ctx.font = "500 10px 'JetBrains Mono', monospace";
-      const label = `${d.cls} ${d.conf.toFixed(2)}`, tw = ctx.measureText(label).width + 10;
+      ctx.font = "500 13px Archivo, 'IBM Plex Sans KR', sans-serif";
+      const label = `${NAME[d.cls]} ${d.conf.toFixed(2)}`, tw = ctx.measureText(label).width + 10;
       ctx.fillStyle = col; ctx.fillRect(x, y - 16, tw, 15);
       ctx.fillStyle = "#0b0d02"; ctx.fillText(label, x + 5, y - 5);
       ctx.restore();
@@ -220,7 +221,7 @@
     if (d) {
       const r = view.getBoundingClientRect();
       tip.hidden = false;
-      tip.innerHTML = `<b style="color:${CLS[d.cls].color}">${d.cls}</b> · ${CLS[d.cls].ko}<br>conf ${d.conf.toFixed(2)} · contrast ${d.feat.contrast}σ · elong ${d.feat.elong}<br>${counts(d) ? '<span style="color:var(--warn)">counts toward NG</span>' : "below τ — ignored"}`;
+      tip.innerHTML = `<b style="color:${CLS[d.cls].color}">${NAME[d.cls]}</b> · ${CLS[d.cls].ko}<br>conf ${d.conf.toFixed(2)} · contrast ${d.feat.contrast}σ · elong ${d.feat.elong}<br>${counts(d) ? '<span style="color:var(--warn)">counts toward NG</span>' : "below τ — ignored"}`;
       tip.style.left = Math.min(e.clientX - r.left + 14, r.width - tip.offsetWidth - 8) + "px";
       tip.style.top = e.clientY - r.top + 14 + "px";
     } else tip.hidden = true;
@@ -268,7 +269,7 @@
   CLASSES.forEach(c => {
     const b = document.createElement("button");
     b.className = "chip"; b.setAttribute("aria-pressed", "true"); b.title = c.ko;
-    b.innerHTML = `<i style="background:${c.color}"></i>${c.id}`;
+    b.innerHTML = `<i style="background:${c.color}"></i>${NAME[c.id]}`;
     b.onclick = () => { enabled.has(c.id) ? enabled.delete(c.id) : enabled.add(c.id); b.setAttribute("aria-pressed", enabled.has(c.id)); refresh(); };
     chips.appendChild(b);
   });
@@ -278,7 +279,7 @@
   function renderVerdict() {
     const v = judge(cur), el = $("[data-verdict]");
     el.classList.toggle("is-ng", v.ng); el.classList.toggle("is-pass", !v.ng);
-    $("b", el).textContent = v.ng ? "NG" : "PASS";
+    $("b", el).textContent = v.ng ? "NG" : "Pass";
     $("[data-why]").textContent = v.why;
   }
   function renderDets() {
@@ -289,7 +290,7 @@
     list.forEach(d => {
       const li = document.createElement("li"), on = counts(d);
       li.className = (on ? "" : "below ") + (d === hover || d === selected ? "is-hot" : "");
-      li.innerHTML = `<i style="background:${CLS[d.cls].color}"></i><span>${d.cls} <span class="f">${d.feat.contrast}σ</span></span><span>${d.conf.toFixed(2)}</span><span class="${on ? "ng" : "ok"}">${on ? "NG" : "—"}</span>`;
+      li.innerHTML = `<i style="background:${CLS[d.cls].color}"></i><span>${NAME[d.cls]} <span class="f">${d.feat.contrast}σ</span></span><span>${d.conf.toFixed(2)}</span><span class="${on ? "ng" : "ok"}">${on ? "NG" : "—"}</span>`;
       li.onmouseenter = () => { hover = d; draw(); };
       li.onmouseleave = () => { hover = null; draw(); };
       li.onclick = () => select(d);
@@ -338,7 +339,7 @@
     history.slice(-16).forEach(p => {
       const b = document.createElement("button");
       b.className = (judge(p).ng ? "ng " : "") + (p === cur ? "is-cur" : "");
-      b.title = `${p.id} · ${judge(p).ng ? "NG" : "PASS"}`;
+      b.title = `${p.id} · ${judge(p).ng ? "NG" : "Pass"}`;
       if (!p.thumb) { p.thumb = document.createElement("canvas"); p.thumb.width = 152; p.thumb.height = 95; }
       p.thumb.getContext("2d").drawImage(p.cv, 0, 0, 152, 95);
       b.appendChild(p.thumb);

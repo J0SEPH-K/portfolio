@@ -29,7 +29,7 @@
   const clocks = $$("[data-clock]");
   const tick = () => {
     const t = new Date().toLocaleTimeString("en-GB", { timeZone: "Asia/Seoul", hour12: false });
-    clocks.forEach(c => (c.textContent = `SEOUL ${t} KST`));
+    clocks.forEach(c => (c.textContent = `Seoul ${t} KST`));
   };
   tick(); setInterval(tick, 1000);
 
@@ -49,7 +49,7 @@
   const cursorHud = $("[data-cursor]");
   const pad = n => String(Math.max(0, Math.round(n))).padStart(4, "0");
   ScanField($(".hero__canvas"), {
-    onFrame: m => { cursorHud.textContent = m.inside ? `X ${pad(m.x)} · Y ${pad(m.y)}` : "CLICK TO PULSE"; },
+    onFrame: m => { cursorHud.textContent = m.inside ? `X ${pad(m.x)} · Y ${pad(m.y)}` : "Click to pulse"; },
   });
 
   /* ---------- loader → hero ---------- */
@@ -95,16 +95,16 @@
     sectionNumber: "002",
     sectionName: "An industrial AI domain map",
     scaleNote: "Diagram not to scale",
-    ringLabels: { LEO: "LINE", GEO: "KNOWLEDGE", GY: "ARCHIVE", MOON: "FIELD" },
+    ringLabels: { LEO: "Line", GEO: "Knowledge", GY: "Archive", MOON: "Field" },
     focusStatus: ["Live demo", "Live demo", "Live demo"],
     labels: {
-      resolved: "DETECTED",
-      gauge: "100,000 ROWS · 5.8 MS",
-      rpo: ["RETRIEVING", "CITED"],
+      resolved: "Detected",
+      gauge: "100,000 rows · 5.8 ms",
+      rpo: ["Retrieving", "Cited"],
       structs: {
-        factory: "BUILD", ground: "OPERATOR", depotL: "INDEX", depotG: "INDEX",
-        shipyard: "AGENTS", moon: "DRONE", asteroid: "SITE", refinery: "INSPECTION",
-        ret: "REPORT", otv: "QUERY", sv: "CACHE", rpo: "RETRIEVING", hyper: "MULTIMODAL", fleet: "FLEET",
+        factory: "Build", ground: "Operator", depotL: "Index", depotG: "Index",
+        shipyard: "Agents", moon: "Drone", asteroid: "Site", refinery: "Inspection",
+        ret: "Report", otv: "Query", sv: "Cache", rpo: "Retrieving", hyper: "Multimodal", fleet: "Fleet",
       },
     },
     figureLabels: ["모델이 할 수 있는 것", "현장에서 쓰이는 것"],
@@ -143,7 +143,7 @@
     ],
     panelTitle: "산업 AI 프론트엔드가 반드시 잘해야 하는 것",
     panelTitleEnd: "",
-    softwareLabel: "agent workflow",
+    softwareLabel: "Agent workflow",
     panel: ["Inspection UI", "Grounded answers", "Large-data grids", "Realtime telemetry", "Accessibility", "Agentic delivery"],
   });
 
@@ -153,10 +153,10 @@
   const preview = $(".work__preview");
   const metaTag = $("[data-meta-tag]"), metaStack = $("[data-meta-stack]");
   const META = [
-    ["LIVE DEMO", "Real CV detector · Web Worker"],
-    ["LIVE DEMO", "BM25 RAG · add your own docs"],
-    ["LIVE DEMO", "100k rows · brush · CSV export"],
-    ["LIVE DEMO", "Real trend data · grounded Q&A"],
+    ["Live demo", "Real CV detector · Web Worker"],
+    ["Live demo", "BM25 RAG · add your own docs"],
+    ["Live demo", "100k rows · brush · CSV export"],
+    ["Live demo", "Real trend data · grounded Q&A"],
   ];
   let active = -1, hovering = false;
   const fitIframes = () => {

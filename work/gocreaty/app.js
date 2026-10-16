@@ -15,7 +15,7 @@
   let D, byId, catName;
   const st = { q: "", sort: "rank", cat: 0, view: "trending", topic: 0 };
 
-  fetch("data.json?v=10161955").then((r) => r.json()).then((d) => {
+  fetch("data.json?v=10162030").then((r) => r.json()).then((d) => {
     D = d;
     byId = new Map(d.videos.map((v) => [v.id, v]));
     catName = new Map(d.categories.items.map((c) => [c.id, c.name]));
@@ -138,12 +138,12 @@
             <div class="panel">
               <h2><span>Predicted retention</span><b data-ret>${sw.predicted_viewed_pct}% viewed</b></h2>
               <svg class="chart" data-retchart viewBox="0 0 300 150" preserveAspectRatio="none"></svg>
-              <p class="mono" data-retnote style="margin:10px 0 0;color:var(--fg-2);text-transform:none;letter-spacing:0;font-size:12px;min-height:34px"></p>
+              <p class="mono" data-retnote style="margin:10px 0 0;color:var(--fg-2);text-transform:none;letter-spacing:0;font-size:14px;min-height:34px"></p>
             </div>
             <div class="panel">
               <h2><span>Moment map</span><b>${v.dur}s</b></h2>
               <div class="timeline">${a.moment_map.map((m) => `
-                <div class="beat"><span>${esc(m.t)}</span><b>${esc(m.role)}</b><p>${esc(m.beat)}</p></div>`).join("")}
+                <div class="beat"><span>${esc(m.t)}</span><b>${esc(m.role[0].toUpperCase() + m.role.slice(1))}</b><p>${esc(m.beat)}</p></div>`).join("")}
               </div>
             </div>
           </div>
@@ -218,7 +218,7 @@
       const col = d.score >= 85 ? "var(--accent)" : d.score >= 70 ? "rgba(212,255,58,.55)" : "rgba(236,236,228,.3)";
       svg += `<path d="${arc(r0, r1, t0, t1)}" fill="rgba(236,236,228,.05)"/>`;
       svg += `<path data-k="${k}" d="${arc(r0, rr, t0, t1)}" fill="${col}"><title>${k} ${d.score}</title></path>`;
-      svg += `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle">${k}</text>`;
+      svg += `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle">${k[0].toUpperCase() + k.slice(1)}</text>`;
     });
     el.innerHTML = svg + `</svg><div class="ring__score"><div><b>${score}</b><small>REACH</small></div></div>`;
     const note = $("[data-dimnote]");

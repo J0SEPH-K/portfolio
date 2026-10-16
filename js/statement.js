@@ -124,7 +124,7 @@ window.Statement = function Statement(section) {
     g.stroke(); g.setLineDash([]);
   }
   const label = (x, y, text, color, alpha) => {
-    g.font = "500 10px 'JetBrains Mono', monospace";
+    g.font = "500 13px Archivo, 'IBM Plex Sans KR', sans-serif";
     g.fillStyle = `rgba(${color},${alpha})`;
     g.fillText(text, x, y);
   };
@@ -212,11 +212,11 @@ window.Statement = function Statement(section) {
         const r = Math.max(5, sp * 0.8);
         if (behind) {
           bracket(x, y, r, inQ ? LIME : WARN, 0.95 * vis, !inQ);
-          if (!inQ) tags.push([x, y, r, "MISSED 0.93", WARN]);
+          if (!inQ) tags.push([x, y, r, "Missed 0.93", WARN]);
         } else if (u.found) {
           const age = clamp((now - u.foundAt) / 320, 0, 1);
           bracket(x, y, r * (1 + (1 - smooth(age)) * 1.2), WARN, 0.95 * vis);
-          if (u === lastFound) tags.push([x, y, r, `WRONG ${u.conf.toFixed(2)}`, WARN]);
+          if (u === lastFound) tags.push([x, y, r, `Wrong ${u.conf.toFixed(2)}`, WARN]);
         }
       }
     });
@@ -229,7 +229,7 @@ window.Statement = function Statement(section) {
       g.fillStyle = trail; g.fillRect(X - 140, 0, 140, H);
       g.fillStyle = `rgba(${LIME},0.95)`; g.fillRect(X - 0.75, 0, 1.5, H);
       g.save(); g.shadowColor = `rgba(${LIME},0.9)`; g.shadowBlur = 16; g.fillRect(X - 0.75, 0, 1.5, H); g.restore();
-      label(Math.min(X + 8, W - 70), 76, `SCAN ${Math.round((X / W) * 100)}%`, LIME, 0.9);
+      label(Math.min(X + 8, W - 70), 76, `Scan ${Math.round((X / W) * 100)}%`, LIME, 0.9);
     }
 
     // the scanner reticle follows the pointer while hunting
@@ -240,7 +240,7 @@ window.Statement = function Statement(section) {
       g.beginPath();
       [[0, -1], [1, 0], [0, 1], [-1, 0]].forEach(([a, b]) => { g.moveTo(ptr.x + a * (R - 6), ptr.y + b * (R - 6)); g.lineTo(ptr.x + a * (R + 6), ptr.y + b * (R + 6)); });
       g.stroke();
-      label(ptr.x + R * 0.72, ptr.y - R * 0.72, "SCAN", c, 0.55 * ptr.on);
+      label(ptr.x + R * 0.72, ptr.y - R * 0.72, "Scan", c, 0.55 * ptr.on);
     }
 
     setText(statusEls[0], phase === 0 ? "1,000 units · 990 correct · 10 wrong" : `Found ${found}/10 — ${coarse ? "tap" : "move or click"} to scan`);
