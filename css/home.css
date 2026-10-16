@@ -161,7 +161,11 @@
 .ob-readout { text-align: right; display: flex; flex-direction: column; gap: 3px; color: rgba(255,255,255,.7); }
 .ob-readout .ob-ro0 { color: #fff; }
 .ob-texts { position: absolute; left: 61%; right: 42px; top: 168px; }
-.ob-texts::before { content: ""; position: absolute; left: -60px; right: -60px; top: -80px; height: 640px; background: radial-gradient(ellipse at 50% 42%, rgba(0,0,0,.8) 0%, rgba(0,0,0,.5) 50%, transparent 72%); z-index: -1; }
+/* closest-side keeps the glow fully transparent before it reaches the box edges (no hard seam) */
+.ob-texts::before { content: ""; position: absolute; left: -120px; right: -120px; top: -160px; height: 800px; background: radial-gradient(closest-side at 50% 50%, rgba(0,0,0,.8) 0%, rgba(0,0,0,.5) 55%, transparent 100%); z-index: -1; }
+/* the diagram fades out under the fixed header */
+.ob::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 150px; background: linear-gradient(180deg, #000 0%, rgba(0,0,0,.72) 45%, transparent 100%); pointer-events: none; z-index: 1; }
+.ob-ui { z-index: 2; }
 .ob-beat { position: absolute; left: 0; top: 0; width: 100%; will-change: opacity, transform; }
 .ob-beatkicker { font-size: 12px; color: var(--ob-lav); display: flex; gap: 10px; align-items: center; margin-bottom: 22px; }
 .ob-beatkicker .ob-sq { background: var(--ob-acc); }
@@ -175,7 +179,7 @@
 .ob-cta { margin-top: 24px; }
 .ob-cta .pill { border-color: rgba(255,255,255,.35); }
 .ob-figure { position: absolute; left: 0; top: 0; width: 380px; max-width: 100%; }
-.ob-figure::before { content: ""; position: absolute; inset: -36px -48px -24px; background: radial-gradient(ellipse at 50% 48%, rgba(0,0,0,.88) 0%, rgba(0,0,0,.62) 52%, transparent 76%); z-index: -1; }
+.ob-figure::before { content: ""; position: absolute; inset: -60px -80px -50px; background: radial-gradient(closest-side at 50% 48%, rgba(0,0,0,.88) 0%, rgba(0,0,0,.62) 60%, transparent 100%); z-index: -1; }
 .ob-figsvg { display: block; overflow: visible; }
 .ob text.ob-figlabel { font-size: 10px; fill: rgba(255,255,255,.7); }
 .ob text.ob-figlabel.ob-accent { fill: var(--ob-lav); }
