@@ -1,5 +1,5 @@
 // Hub page choreography: loader → hero, scrubbed statement, pinned domain map,
-// active-item work list with live iframe previews, horizontal process rail.
+// active-item work list with live iframe previews, agentic tribunal panel.
 (() => {
   const CONFIG = {
     email: "jungjunkimlegitofficial101@gmail.com",
@@ -85,6 +85,7 @@
 
   /* ---------- statement: three-state lot scanner ---------- */
   Statement($(".statement"));
+  Tribunal($(".tribunal"));
 
   /* ---------- domain map (orbital) ---------- */
   Orbit.mount($(".domain__stage"), $(".domain"), {
@@ -238,25 +239,6 @@
   $$("[data-case]").forEach(b => b.addEventListener("click", () => { lastFocus = b; openCase(b.dataset.case); }));
   $$("[data-close]", drawer).forEach(b => b.addEventListener("click", closeCase));
   addEventListener("keydown", e => { if (e.key === "Escape" && drawer.classList.contains("is-open")) closeCase(); });
-
-  /* ---------- process rail (desktop pins + scrolls sideways) ---------- */
-  const mm = gsap.matchMedia();
-  mm.add("(min-width: 861px)", () => {
-    const track = $(".process__track");
-    gsap.to(track, {
-      x: () => -(track.scrollWidth - innerWidth),
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".process__pin", start: "top top",
-        end: () => "+=" + (track.scrollWidth - innerWidth),
-        pin: true, scrub: true, invalidateOnRefresh: true,
-      },
-    });
-    gsap.from(".process__title span", {
-      xPercent: i => (i ? 30 : -30), ease: "none",
-      scrollTrigger: { trigger: ".process", start: "top bottom", end: "top top", scrub: true },
-    });
-  });
 
   /* ---------- marquees ---------- */
   $$(".marquee").forEach(m => {

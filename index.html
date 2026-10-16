@@ -12,8 +12,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/base.css?v=10161905">
-  <link rel="stylesheet" href="css/home.css?v=10161905">
+  <link rel="stylesheet" href="css/base.css?v=10161955">
+  <link rel="stylesheet" href="css/home.css?v=10161955">
 </head>
 <body class="is-loading">
 
@@ -115,43 +115,25 @@
       </div>
     </section>
 
-    <!-- AGENTIC PROCESS (horizontal rail) -->
-    <section class="process" id="process" aria-label="Agentic workflow">
-      <div class="process__pin">
-        <h2 class="process__title">
-          <span>AGENTIC</span> <span>WORKFLOW</span>
-        </h2>
-        <div class="process__track">
-          <article class="pcard">
-            <p class="mono">Step 01 · Reverse-engineer</p>
-            <h3>레퍼런스를 “읽는” 에이전트</h3>
-            <p>브라우저 에이전트로 레퍼런스 사이트를 직접 스크롤·클릭하고, DOM·스크립트를 분석해 사용 라이브러리와 인터랙션 구조(핀 고정, 스크롤 스크럽, 단어 분할 인트로)를 파악합니다. 이 사이트도 그렇게 시작했습니다.</p>
-            <code class="mono">gsap · ScrollTrigger · Lenis · Barba</code>
-          </article>
-          <article class="pcard">
-            <p class="mono">Step 02 · Parallelize</p>
-            <h3>10개 에이전트 병렬 개발</h3>
-            <p>GoCreaty 백엔드는 git worktree로 분리된 10개의 Claude Code 에이전트가 각자 레인(DB, API, 파이프라인…)을 맡아 동시에 개발했고, 저는 의존 순서대로 리뷰·머지하며 프론트엔드를 직접 맡았습니다.</p>
-            <code class="mono">tmux · worktree × 10 · merge order</code>
-          </article>
-          <article class="pcard">
-            <p class="mono">Step 03 · Verify in browser</p>
-            <h3>“동작한다”는 증거로 끝내기</h3>
-            <p>에이전트가 만든 화면은 에이전트가 직접 띄워 확인합니다. 콘솔 에러, 네트워크, 모바일 뷰포트, 실제 클릭까지—스크린샷이 아닌 측정값으로 검증합니다.</p>
-            <code class="mono">preview · console · viewport · a11y</code>
-          </article>
-          <article class="pcard">
-            <p class="mono">Step 04 · Judgment</p>
-            <h3>만들기 전에 “왜”를 먼저</h3>
-            <p>AI가 빨리 만들수록 잘못된 것을 빨리 만들 위험도 커집니다. 기존 도구로 충분하지 않은지 먼저 검증하고, 그래도 필요할 때 만듭니다. 실제로 프로젝트 하나는 그 판단으로 접었습니다.</p>
-            <code class="mono">validate → build → measure</code>
-          </article>
-          <article class="pcard pcard--accent">
-            <p class="mono">Timebox</p>
-            <h3>이 포트폴리오:<br>약 1시간</h3>
-            <p>레퍼런스 2곳 분석 → 설계 → 허브 + 라이브 데모 3개 구현 → 데스크톱·모바일 검증 → 배포. 모든 단계가 에이전트와의 협업입니다. 빨리 만든 만큼, 검증은 생략하지 않았습니다.</p>
-            <code class="mono">analyze · build · verify · ship</code>
-          </article>
+    <!-- AGENTIC WORKFLOW: sticky stage; scroll moves through the six states of a debate tribunal (js/tribunal.js) -->
+    <section class="tribunal" id="process" aria-label="에이전트 워크플로">
+      <div class="st">
+        <canvas class="st__bg" aria-label="에이전트 8명이 조사하고 토론하며, 심판 3명과 슈퍼 심판이 판정합니다. 클릭하면 가장 가까운 에이전트가 발언합니다."></canvas>
+        <div class="st__layer">
+          <p class="mono mono-sq st__tag">004 — Agentic workflow</p>
+          <h2 class="st__title">
+            <span class="st__line is-on">규칙은 당신의 말에서만 나옵니다.</span>
+            <span class="st__line">에이전트마다 아이디어 하나. 각자 조사합니다.</span>
+            <span class="st__line">근거 없는 주장은 기록에 남지 않습니다.</span>
+            <span class="st__line">세 명의 심판이 토론 전체를 실시간으로 듣습니다.</span>
+            <span class="st__line">보고서의 모든 문장에는 출처가 붙습니다.</span>
+            <span class="st__line">최종 판정은, 당신의 기준 그대로.</span>
+          </h2>
+          <div class="st__slot"></div>
+          <div class="st__foot mono">
+            <span data-st-status></span>
+            <span class="st__dots" aria-hidden="true"><i class="is-on"></i><i></i><i></i><i></i><i></i><i></i></span>
+          </div>
         </div>
       </div>
     </section>
@@ -166,7 +148,7 @@
     <!-- FOOTER / CONTACT -->
     <footer class="foot" id="contact">
       <div class="foot__cta">
-        <p class="mono mono-sq">004 — Contact</p>
+        <p class="mono mono-sq">005 — Contact</p>
         <h2>Ready for your<br>next interface</h2>
         <p class="foot__ko">다음 화면을 함께 만들어요.</p>
         <div class="foot__actions">
@@ -199,10 +181,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="js/loader.js?v=10161905"></script>
-  <script src="js/scanfield.js?v=10161905"></script>
-  <script src="js/orbit.js?v=10161905"></script>
-  <script src="js/statement.js?v=10161905"></script>
-  <script src="js/home.js?v=10161905"></script>
+  <script src="js/loader.js?v=10161955"></script>
+  <script src="js/scanfield.js?v=10161955"></script>
+  <script src="js/orbit.js?v=10161955"></script>
+  <script src="js/tribunal.js?v=10161955"></script>
+  <script src="js/statement.js?v=10161955"></script>
+  <script src="js/home.js?v=10161955"></script>
 </body>
 </html>

@@ -19,7 +19,7 @@
   let tau = 0.75;
 
   /* ---------- detector worker ---------- */
-  const worker = new Worker("detector.js?v=10161905");
+  const worker = new Worker("detector.js?v=10161955");
   let jobId = 0;
   const pending = new Map();
   worker.onmessage = e => { const r = pending.get(e.data.id); pending.delete(e.data.id); r && r(e.data); };
