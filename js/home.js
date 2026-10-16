@@ -55,30 +55,24 @@
   /* ---------- loader → hero ---------- */
   const heroLines = $$(".hl > span");
   gsap.set(heroLines, { yPercent: 110 });
-  const count = $(".loader__count");
-  const counter = { v: 0 };
+  const loader = Loader($(".loader"), $(".loader__tile"));
+  const R = loader.R;
   const intro = gsap.timeline({ delay: 0.15 });
   intro
     .from(".loader__word--l", { xPercent: 40, opacity: 0, duration: 0.9, ease: "expo.out" }, 0)
     .from(".loader__word--r", { xPercent: -40, opacity: 0, duration: 0.9, ease: "expo.out" }, 0)
-    .from(".loader__tile", { scaleY: 0, duration: 0.7, ease: "expo.out" }, 0.1)
-    .to(counter, {
-      v: 100, duration: reduce ? 0.1 : 1.3, ease: "power2.inOut",
-      onUpdate: () => (count.textContent = String(Math.round(counter.v)).padStart(3, "0")),
-    }, 0.2)
+    // the window opens downward from the tile slot
+    .to(R, { h: () => loader.tileRect().height, duration: 0.7, ease: "expo.out" }, 0.1)
+    .to(R, { count: 100, duration: reduce ? 0.1 : 1.6, ease: "power2.inOut" }, 0.2)
     .to(".loader__word--l", { xPercent: -120, opacity: 0, duration: 0.8, ease: "expo.in" }, ">")
     .to(".loader__word--r", { xPercent: 120, opacity: 0, duration: 0.8, ease: "expo.in" }, "<")
-    .to(".loader__tile", {
-      x: () => { const r = $(".loader__tile").getBoundingClientRect(); return innerWidth / 2 - (r.left + r.width / 2); },
-      y: () => { const r = $(".loader__tile").getBoundingClientRect(); return innerHeight / 2 - (r.top + r.height / 2); },
-      scaleX: () => innerWidth / $(".loader__tile").offsetWidth * 1.08,
-      scaleY: () => innerHeight / $(".loader__tile").offsetHeight * 1.08,
-      duration: 0.9, ease: "expo.inOut",
-    }, "<0.35")
-    .to(".loader", { opacity: 0, duration: 0.4 }, ">-0.1")
+    // grow the window itself to the viewport; pitch and scan line stay in screen pixels
+    .to(R, { x: 0, y: 0, w: () => innerWidth, h: () => innerHeight, open: 1, duration: 1.0, ease: "expo.inOut" }, "<0.35")
+    .to(".loader", { opacity: 0, duration: 0.45 }, ">-0.05")
     .to(heroLines, { yPercent: 0, duration: 1.2, stagger: 0.08, ease: "expo.out" }, "<")
     .from([".hero__sub", ".hero__hud", ".hero__scroll", ".nav"], { opacity: 0, y: 12, duration: 0.8, stagger: 0.06 }, "<0.3")
     .add(() => {
+      loader.stop();
       $(".loader").remove();
       document.body.classList.remove("is-loading");
       lenis.start();
