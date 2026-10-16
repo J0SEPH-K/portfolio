@@ -15,3 +15,9 @@ The domain-map section re-implements the scroll behaviour of [Turion Space](http
 (sticky stage, 10-beat timeline, camera settle, orbiting units, sensor cones, capability panel). It was studied with
 [REA](https://github.com/morluto/rea) static analysis plus source reading and rewritten here with this portfolio's own content.
 The hero/work-list motion takes cues from [Bulletproof](https://www.wearebulletproof.com).
+
+## GoCreaty demo
+
+`work/gocreaty/` is the real GoCreaty frontend (Next.js 14), statically exported. The signed-in app is served
+from API responses recorded off the real backend running against real (snapshot) trend data; `lib/demo/mock.ts`
+answers requests in the browser, and write actions (analyze, chat) are simulated client-side.

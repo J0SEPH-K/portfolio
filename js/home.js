@@ -155,7 +155,7 @@
     ["LIVE DEMO", "Canvas 2D · Vanilla JS"],
     ["LIVE DEMO", "Streaming UI · Client RAG"],
     ["LIVE DEMO", "Virtual scroll · 100,000 rows"],
-    ["CASE NOTE", "Next.js · FastAPI · 10 agents"],
+    ["LIVE APP", "Next.js · React Query · real trend data"],
   ];
   let active = -1, hovering = false;
   const fitIframes = () => {
