@@ -156,8 +156,6 @@
     ["LIVE DEMO", "Streaming UI · Client RAG"],
     ["LIVE DEMO", "Virtual scroll · 100,000 rows"],
     ["CASE NOTE", "Next.js · FastAPI · 10 agents"],
-    ["CASE NOTE", "Python · ffmpeg · edge-tts"],
-    ["CASE NOTE", "Roblox · Luau · UI/UX"],
   ];
   let active = -1, hovering = false;
   const fitIframes = () => {
@@ -214,29 +212,6 @@
         ["Backend", "FastAPI(async) · Celery · SQLAlchemy/Alembic · pgvector"],
         ["Pipeline", "트렌드 수집 → LLM 스크립트 → TTS → 비주얼 → MP4 렌더 → 스케줄 업로드"],
         ["Agentic", "Claude Code 에이전트 10개를 tmux + git worktree로 병렬 실행. 레인별 프롬프트, 의존 순서(DB 모델 → API → 서비스)대로 리뷰·머지"],
-      ],
-    },
-    shorts: {
-      tag: "Personal pipeline · 2026",
-      title: "AI Shorts Engine",
-      lede: "주제 선정부터 1080×1920 완성 영상까지, 하루 두 번 사람 손 없이 돌아가는 숏폼 생성 파이프라인. 로컬에서 엔드 투 엔드 검증 완료.",
-      facts: [
-        ["Script", "claude CLI로 구조화된 JSON 스크립트 생성"],
-        ["Voice", "edge-tts의 WordBoundary 이벤트로 단어 단위 자막 타이밍 확보 — 원문을 이미 알기에 음성 정렬(Whisper)이 필요 없다는 설계 판단"],
-        ["Captions", "Pillow로 단어별 PNG를 렌더해 투명 트랙으로 합성 (libass 없는 ffmpeg 환경 대응, 결과적으로 이식성↑)"],
-        ["Compose", "Pexels B-roll + ffmpeg overlay, ffprobe·프레임 검사로 출력 검증"],
-        ["Safety", "launchd 스케줄, 업로드는 기본 비활성 — 사람이 결과를 본 뒤에만 켜도록 설계"],
-      ],
-    },
-    dashdash: {
-      tag: "Roblox game · Luau",
-      title: "DashDash",
-      lede: "비트에 맞춰 야간 고속도로를 달리며 유리 게이트를 통과하는 리듬 레이싱 게임. 게임 UI/UX와 제작 툴링을 맡았습니다.",
-      facts: [
-        ["UI", "대시보드 카드, 상점/인벤토리 모달, 실시간 등급 HUD — 세 화면이 하나의 등급 함수를 공유해 숫자가 항상 일치"],
-        ["Tooling", "약 3,600줄 규모의 채보(차트) 에디터 플러그인"],
-        ["Debugging", "플레이테스트 중 저장한 데이터가 사라지는 문제를 영속 미러 + 모드 전환 시점 동기화로 해결"],
-        ["UX audit", "최소 글자 크기, 세이프 에어리어, 터치 타깃, 빈 상태 화면 등 1차 개선 적용"],
       ],
     },
   };

@@ -259,13 +259,6 @@
 .wp--gc { background:
   repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 1px, transparent 1px 48px),
   linear-gradient(135deg, #ff4f79 0%, #7b3cff 55%, #0b0b14 100%); }
-.wp--se { background:
-  linear-gradient(90deg, transparent 0 34%, rgba(0,0,0,.55) 34% 66%, transparent 66%),
-  repeating-linear-gradient(0deg, rgba(212,255,58,.12) 0 2px, transparent 2px 22px),
-  linear-gradient(160deg, #102a43, #0b0d10 70%); }
-.wp--dd { background:
-  repeating-linear-gradient(115deg, rgba(0,255,240,.22) 0 2px, transparent 2px 60px),
-  radial-gradient(circle at 50% 120%, #ff2bd6 0%, #2a0a4a 45%, #05030b 80%); }
 .wp__meta {
   position: absolute; left: 0; right: 0; bottom: -30px;
   display: flex; justify-content: space-between; color: var(--fg-2);
