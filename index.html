@@ -66,16 +66,19 @@
     <!-- STATEMENT: sticky stage; scroll moves through three states, the cursor scans the lot -->
     <section class="statement" aria-label="정확도와 신뢰">
       <div class="st">
-        <p class="mono mono-sq st__tag">001 — 관점</p>
-        <h2 class="st__title">
-          <span class="st__line is-on" data-st="0">AI는 99% 정확합니다.</span>
-          <span class="st__line" data-st="1">그런데 10개는 틀렸습니다.</span>
-          <span class="st__line" data-st="2">근거를 보이면, 23개만 보면 됩니다.</span>
-        </h2>
-        <canvas class="st__grid" aria-label="1,000개 검사 유닛. 커서로 훑으면 오판이 드러납니다."></canvas>
-        <div class="st__foot mono">
-          <span data-st-status>1,000 units · 990 correct</span>
-          <span class="st__dots" aria-hidden="true"><i class="is-on"></i><i></i><i></i></span>
+        <canvas class="st__bg" aria-label="1,000개 검사 유닛. 커서로 훑거나 클릭하면 오판이 드러납니다."></canvas>
+        <div class="st__layer">
+          <p class="mono mono-sq st__tag">001 — 관점</p>
+          <h2 class="st__title">
+            <span class="st__line is-on" data-st="0">AI는 99% 정확합니다.</span>
+            <span class="st__line" data-st="1">그런데 10개는 틀렸습니다.</span>
+            <span class="st__line" data-st="2">근거를 보이면, 23개만 보면 됩니다.</span>
+          </h2>
+          <div class="st__slot"></div>
+          <div class="st__foot mono">
+            <span data-st-status>1,000 units · 990 correct · 10 wrong</span>
+            <span class="st__dots" aria-hidden="true"><i class="is-on"></i><i></i><i></i></span>
+          </div>
         </div>
       </div>
     </section>

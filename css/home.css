@@ -94,12 +94,17 @@
 .hero__scroll:hover { color: var(--accent); }
 
 /* ---------- Statement (sticky three-state scanner, js/statement.js) ---------- */
-.statement { position: relative; height: 320svh; background: var(--paper); color: var(--paper-ink); }
-.st {
-  position: sticky; top: 0; height: 100svh;
+/* one full-stage canvas; the text layer exists twice, the dark copy is revealed behind the laser */
+.statement { position: relative; height: 360svh; background: var(--paper); color: var(--paper-ink); }
+.st { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+.st__bg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: crosshair; touch-action: pan-y; }
+.st__layer {
+  position: absolute; inset: 0;
   display: flex; flex-direction: column; justify-content: center; gap: clamp(18px, 3.2vh, 36px);
   padding: 84px var(--gutter) 28px;
+  pointer-events: none;
 }
+.st__layer.is-dark { color: var(--fg); }
 .st__tag { margin: 0; color: rgba(17,18,16,.55); font-size: 13px; }
 .st__title {
   position: relative; margin: 0;
@@ -114,11 +119,14 @@
   transition: opacity .5s var(--ease-out), transform .8s var(--ease-out);
 }
 .st__line.is-on { opacity: 1; transform: none; }
-.st__grid { width: 100%; display: block; cursor: crosshair; touch-action: pan-y; }
+.st__slot { width: 100%; flex: none; }
 .st__foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 12px; color: rgba(17,18,16,.6); }
 .st__dots { display: inline-flex; gap: 6px; }
 .st__dots i { width: 8px; height: 8px; border: 1px solid rgba(17,18,16,.5); transition: background .4s; }
 .st__dots i.is-on { background: var(--paper-ink); border-color: var(--paper-ink); }
+.is-dark .st__tag, .is-dark .st__foot { color: rgba(236,236,228,.62); }
+.is-dark .st__dots i { border-color: rgba(236,236,228,.5); }
+.is-dark .st__dots i.is-on { background: var(--accent); border-color: var(--accent); }
 
 /* ---------- Domain map (orbital, js/orbit.js) ---------- */
 /* 11 screens of track, one sticky screen of stage: progress spans 10 screens of scroll */
