@@ -34,12 +34,14 @@
   tick(); setInterval(tick, 1000);
 
   const mail = $("[data-email]");
-  if (CONFIG.email) { mail.href = `mailto:${CONFIG.email}`; mail.textContent = CONFIG.email; }
-  else { mail.href = "#contact"; }
+  const mailText = $("[data-email-text]");
+  mail.href = `mailto:${CONFIG.email}`;
+  mailText.textContent = CONFIG.email;
   const copyBtn = $("[data-copy]");
   copyBtn.addEventListener("click", () => {
-    const done = () => { copyBtn.textContent = "Copied"; setTimeout(() => (copyBtn.textContent = "Copy"), 1600); };
-    const pickText = () => { const r = document.createRange(); r.selectNodeContents(mail); getSelection().removeAllRanges(); getSelection().addRange(r); };
+    const label = $("i", copyBtn);
+    const done = () => { label.textContent = "Copied"; setTimeout(() => (label.textContent = "Copy"), 1600); };
+    const pickText = () => { const r = document.createRange(); r.selectNodeContents(mailText); getSelection().removeAllRanges(); getSelection().addRange(r); };
     if (navigator.clipboard) navigator.clipboard.writeText(CONFIG.email).then(done, pickText);
     else pickText();
   });
@@ -47,7 +49,7 @@
   const cursorHud = $("[data-cursor]");
   const pad = n => String(Math.max(0, Math.round(n))).padStart(4, "0");
   ScanField($(".hero__canvas"), {
-    onFrame: m => { if (m.x > 0) cursorHud.textContent = `X ${pad(m.x)} · Y ${pad(m.y)}`; },
+    onFrame: m => { cursorHud.textContent = m.inside ? `X ${pad(m.x)} · Y ${pad(m.y)}` : "CLICK TO PULSE"; },
   });
 
   /* ---------- loader → hero ---------- */
@@ -67,8 +69,10 @@
     .to(".loader__word--l", { xPercent: -120, opacity: 0, duration: 0.8, ease: "expo.in" }, ">")
     .to(".loader__word--r", { xPercent: 120, opacity: 0, duration: 0.8, ease: "expo.in" }, "<")
     .to(".loader__tile", {
-      scaleX: () => innerWidth / $(".loader__tile").offsetWidth * 1.05,
-      scaleY: () => innerHeight / $(".loader__tile").offsetHeight * 1.05,
+      x: () => { const r = $(".loader__tile").getBoundingClientRect(); return innerWidth / 2 - (r.left + r.width / 2); },
+      y: () => { const r = $(".loader__tile").getBoundingClientRect(); return innerHeight / 2 - (r.top + r.height / 2); },
+      scaleX: () => innerWidth / $(".loader__tile").offsetWidth * 1.08,
+      scaleY: () => innerHeight / $(".loader__tile").offsetHeight * 1.08,
       duration: 0.9, ease: "expo.inOut",
     }, "<0.35")
     .to(".loader", { opacity: 0, duration: 0.4 }, ">-0.1")
@@ -107,45 +111,12 @@
     scrollTrigger: { trigger: title, start: "top 80%", end: "bottom 45%", scrub: true },
   });
 
-  /* ---------- domain map ---------- */
-  const svg = $(".domain__map");
-  const NS = "http://www.w3.org/2000/svg";
-  const el = (tag, attrs, parent) => {
-    const n = document.createElementNS(NS, tag);
-    Object.entries(attrs).forEach(([k, v]) => n.setAttribute(k, v));
-    parent && parent.appendChild(n);
-    return n;
-  };
-  const ticks = $(".ticks", svg);
-  for (let i = 0; i < 120; i++) {
-    const a = (i / 120) * Math.PI * 2, r1 = 250, r2 = i % 10 ? 256 : 266;
-    el("line", { x1: Math.cos(a) * r1, y1: Math.sin(a) * r1, x2: Math.cos(a) * r2, y2: Math.sin(a) * r2 }, ticks);
-  }
-  const NODES = [
-    { label: "VISION QC", r: 170, a: -140, crumb: "VISION / INSPECTION" },
-    { label: "RAG DESK", r: 170, a: -30, crumb: "RAG / KNOWLEDGE" },
-    { label: "GRID 100K", r: 250, a: 60, crumb: "PLATFORM / DATA" },
-    { label: "FIELD OPS", r: 250, a: 155, crumb: "DRONE / FIELD" },
-  ];
-  // decorative satellites on the rings
-  const links = $(".map-links", svg);
-  for (let i = 0; i < 26; i++) {
-    const r = [90, 170, 250][i % 3], a = Math.random() * Math.PI * 2;
-    el("circle", { class: "sat", r: 1.6, cx: Math.cos(a) * r, cy: Math.sin(a) * r }, links);
-  }
-  const nodeGroup = $(".map-nodes", svg);
-  const nodeEls = NODES.map(n => {
-    const rad = (n.a * Math.PI) / 180;
-    n.x = Math.cos(rad) * n.r; n.y = Math.sin(rad) * n.r;
-    const g = el("g", { class: "node", transform: `translate(${n.x} ${n.y})` }, nodeGroup);
-    el("circle", { class: "halo", r: 18 }, g);
-    el("circle", { class: "dot", r: 7 }, g);
-    const t = el("text", { class: "node-label", y: n.y > 0 ? 34 : -22 }, g);
-    t.textContent = n.label;
-    return g;
-  });
-  const linkPath = el("path", { d: "" }, links);
+  /* ---------- statement: lot inspector ---------- */
+  Lot($("[data-lot]"));
 
+  /* ---------- domain map (orbital) ---------- */
+  const orbit = Orbit($(".orbit"));
+  const CRUMBS = ["VISION / INSPECTION", "RAG / KNOWLEDGE", "PLATFORM / DATA", "DRONE / FIELD OPS"];
   const panels = $$(".dpanel"), steps = $$(".domain__steps li"), bars = steps.map(li => $("i", li));
   const crumb = $("[data-crumb]");
   let current = -1;
@@ -154,29 +125,27 @@
     current = i;
     panels.forEach((p, k) => p.classList.toggle("is-active", k === i));
     steps.forEach((s, k) => s.classList.toggle("is-active", k === i));
-    nodeEls.forEach((n, k) => n.classList.toggle("is-active", k === i));
-    crumb.textContent = NODES[i].crumb;
-    const n = NODES[i];
-    // elbow link from the core out to the active node
-    linkPath.setAttribute("d", `M0 0 L${(n.x * 0.55).toFixed(1)} ${(n.y * 0.1).toFixed(1)} L${n.x.toFixed(1)} ${n.y.toFixed(1)}`);
-    const len = linkPath.getTotalLength();
-    gsap.fromTo(linkPath, { strokeDasharray: len, strokeDashoffset: len }, { strokeDashoffset: 0, duration: 0.7, ease: "expo.out" });
+    crumb.textContent = CRUMBS[i];
   };
   setStep(0);
-
-  ScrollTrigger.create({
+  const domainST = ScrollTrigger.create({
     trigger: ".domain__pin",
     start: "top top",
     end: () => "+=" + innerHeight * 3,
     pin: true,
     scrub: true,
     onUpdate: self => {
-      const p = self.progress, n = NODES.length;
+      const p = self.progress, n = 4;
       setStep(Math.min(n - 1, Math.floor(p * n)));
       bars.forEach((b, k) => (b.style.width = Math.max(0, Math.min(1, p * n - k)) * 100 + "%"));
-      gsap.set(".map-rings", { rotation: p * 50, svgOrigin: "0 0" });
+      orbit.setProgress(p);
     },
   });
+  // step tabs jump to the middle of their scroll range
+  $$(".domain__steps button").forEach(b => b.addEventListener("click", () => {
+    const i = +b.dataset.step;
+    lenis.scrollTo(domainST.start + (domainST.end - domainST.start) * ((i + 0.5) / 4), { duration: 1.4 });
+  }));
 
   /* ---------- work list ---------- */
   const items = $$(".work__list [data-i]");
@@ -339,6 +308,27 @@
   fitWord();
   addEventListener("resize", fitWord);
   document.fonts && document.fonts.ready.then(fitWord);
+
+  const letters = [...word.textContent].map(c => {
+    const sp = document.createElement("span");
+    sp.textContent = c; sp.setAttribute("aria-hidden", "true");
+    return sp;
+  });
+  word.textContent = ""; letters.forEach(l => word.appendChild(l));
+  fitWord();
+  const foot = $(".foot");
+  let wordRaf = 0, px = -1e4;
+  const shape = () => {
+    wordRaf = 0;
+    letters.forEach(l => {
+      const r = l.getBoundingClientRect();
+      const d = Math.abs(r.left + r.width / 2 - px);
+      const f = Math.max(0, 1 - d / 260);       // 1 under the cursor, 0 far away
+      l.style.fontVariationSettings = `"wdth" ${125 - 55 * f}, "wght" ${900 - 600 * f}`;
+    });
+  };
+  foot.addEventListener("pointermove", e => { px = e.clientX; if (!wordRaf) wordRaf = requestAnimationFrame(shape); });
+  foot.addEventListener("pointerleave", () => { px = -1e4; if (!wordRaf) wordRaf = requestAnimationFrame(shape); });
 
   gsap.from(".foot__word", {
     yPercent: 60, ease: "none",

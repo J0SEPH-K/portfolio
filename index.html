@@ -71,9 +71,28 @@
         화면은 그 정확함을<br>
         한눈에 믿게 해야 합니다.
       </h2>
-      <div class="statement__cols">
-        <p>모델의 정확도가 99%여도 작업자가 결과를 이해하지 못하면 현장은 멈춥니다. 저는 그 1%의 간극—<em>판단 근거, 신뢰도, 예외 처리</em>—를 인터페이스로 메우는 일을 합니다.</p>
-        <p>이 사이트의 데모는 모두 실제로 동작합니다. 결함 검출 결과를 임계값으로 다시 판정하고, 챗봇은 답변마다 출처 문단을 보여주며, 10만 행 데이터는 끊김 없이 스크롤됩니다.</p>
+      <div class="lot" data-lot>
+        <div class="lot__head">
+          <div class="lot__meta">
+            <p class="mono">Lot 24-1016 · 1,000 units · Model accuracy <b>99.0%</b></p>
+            <p class="lot__q" data-lot-q>1,000개 중 10개는 오판입니다. 어느 것인지 찾을 수 있나요?</p>
+          </div>
+          <div class="lot__modes" role="group" aria-label="표시 방식">
+            <button type="button" class="seg is-on" data-mode="plain" aria-pressed="true">판정만</button>
+            <button type="button" class="seg" data-mode="explain" aria-pressed="false">판정 + 근거</button>
+          </div>
+        </div>
+        <div class="lot__body">
+          <canvas class="lot__grid" aria-label="1,000개 검사 유닛 격자. 마우스를 올리면 판정 근거가 보입니다."></canvas>
+          <aside class="lot__side">
+            <div class="lot__stat"><span class="mono">Review queue</span><b data-lot-review>—</b></div>
+            <div class="lot__stat"><span class="mono">Misjudgements caught</span><b data-lot-caught>—</b></div>
+            <div class="lot__card" data-lot-card>
+              <p class="mono">Hover a unit</p>
+              <p class="lot__hint">각 칸은 검사된 유닛 하나입니다. 근거를 켜면 신뢰도가 낮은 유닛이 드러납니다.</p>
+            </div>
+          </aside>
+        </div>
       </div>
     </section>
 
@@ -82,33 +101,11 @@
       <div class="domain__pin">
         <div class="domain__head">
           <span class="mono mono-sq">002</span>
-          <span class="mono">산업 AI 도메인 맵</span>
+          <span class="mono mono-sq">An industrial AI domain map</span>
           <span class="mono domain__crumb" data-crumb>VISION / INSPECTION</span>
         </div>
 
-        <div class="domain__stage">
-          <svg class="domain__map" viewBox="-300 -300 600 600" aria-hidden="true">
-            <defs>
-              <radialGradient id="glow" r="0.5">
-                <stop offset="0" stop-color="#d4ff3a" stop-opacity=".35"/>
-                <stop offset="1" stop-color="#d4ff3a" stop-opacity="0"/>
-              </radialGradient>
-            </defs>
-            <g class="map-rings">
-              <circle r="90"  class="ring"/>
-              <circle r="170" class="ring ring--dash"/>
-              <circle r="250" class="ring"/>
-              <g class="ticks"></g>
-            </g>
-            <g class="map-links"></g>
-            <g class="map-nodes"></g>
-            <g class="map-core">
-              <circle r="56" fill="url(#glow)"/>
-              <circle r="30" class="core"/>
-              <text y="4" class="core-label">OPERATOR</text>
-            </g>
-          </svg>
-        </div>
+        <svg class="orbit" aria-hidden="true"></svg>
 
         <div class="domain__panels">
           <article class="dpanel is-active" data-step="0">
@@ -137,11 +134,11 @@
           </article>
         </div>
 
-        <ol class="domain__steps" aria-hidden="true">
-          <li class="is-active"><span>01</span> Vision QC<i></i></li>
-          <li><span>02</span> RAG Desk<i></i></li>
-          <li><span>03</span> Grid 100K<i></i></li>
-          <li><span>04</span> Field Ops<i></i></li>
+        <ol class="domain__steps" aria-label="도메인 단계">
+          <li class="is-active"><button type="button" data-step="0"><span>01.</span> Vision / Inspection</button><i></i></li>
+          <li><button type="button" data-step="1"><span>02.</span> RAG / Knowledge</button><i></i></li>
+          <li><button type="button" data-step="2"><span>03.</span> Platform / Data</button><i></i></li>
+          <li><button type="button" data-step="3"><span>04.</span> Drone / Field Ops</button><i></i></li>
         </ol>
       </div>
     </section>
@@ -229,16 +226,21 @@
     <footer class="foot" id="contact">
       <div class="foot__cta">
         <p class="mono mono-sq">004 — Contact</p>
-        <h2>다음 화면을<br>함께 만들어요.</h2>
-        <div class="foot__mailrow"><a class="pill is-accent foot__mail" data-email href="#">Email</a><button type="button" class="pill" data-copy>Copy</button></div>
+        <h2>Ready for your<br>next interface</h2>
+        <p class="foot__ko">다음 화면을 함께 만들어요.</p>
+        <div class="foot__actions">
+          <a class="foot__btn mono" data-email href="#">Email me</a>
+          <button type="button" class="foot__copy mono" data-copy aria-label="이메일 주소 복사"><span data-email-text></span><i>Copy</i></button>
+        </div>
       </div>
       <div class="foot__grid mono">
         <div><span class="dim">Live demos</span><a href="work/vision-qc/index.html">Vision QC</a><a href="work/rag-desk/index.html">RAG Desk</a><a href="work/grid-100k/index.html">Grid 100K</a></div>
-        <div><span class="dim">Elsewhere</span><a href="https://github.com/J0SEPH-K" target="_blank" rel="noopener">GitHub</a></div>
-        <div><span class="dim">Local time</span><span data-clock>SEOUL 00:00:00 KST</span></div>
-        <div><span class="dim">Built with</span><span>Claude Code + me</span></div>
+        <div><span class="dim">Case notes</span><button type="button" data-case="gocreaty">GoCreaty</button><button type="button" data-case="shorts">Shorts Engine</button><button type="button" data-case="dashdash">DashDash</button></div>
+        <div><span class="dim">Elsewhere</span><a href="https://github.com/J0SEPH-K" target="_blank" rel="noopener">GitHub</a><a href="https://github.com/J0SEPH-K/portfolio" target="_blank" rel="noopener">Source of this site</a></div>
+        <div class="foot__social"><span class="dim">Local time</span><span data-clock>SEOUL 00:00:00 KST</span></div>
       </div>
-      <div class="foot__word" aria-hidden="true">JUNGJUN KIM</div>
+      <div class="foot__legal mono"><span>© 2026 Jungjun Kim</span><span>Built with Claude Code</span></div>
+      <div class="foot__word" aria-label="Jungjun Kim" data-word>JUNGJUN KIM</div>
     </footer>
   </main>
 
@@ -258,6 +260,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
   <script src="js/scanfield.js"></script>
+  <script src="js/orbit.js"></script>
+  <script src="js/lot.js"></script>
   <script src="js/home.js"></script>
 </body>
 </html>
