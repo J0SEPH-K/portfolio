@@ -193,8 +193,8 @@ window.Orbit = (function () {
     for (const k in cfg.labels.structs) LB[k] = label(cfg.labels.structs[k], k === "ret" ? "ob-accent" : "");
     const tags = [0, 1, 2].map(i => {
       const t = svgEl("text", { class: "ob-mono ob-label ob-tag" }, L.labels);
-      svgEl("tspan", null, t).textContent = String(cfg.beats[0].lines[i] || "").toUpperCase();
-      svgEl("tspan", { class: "ob-tagstatus" }, t).textContent = cfg.focusStatus[i] ? " · " + String(cfg.focusStatus[i]).toUpperCase() : "";
+      svgEl("tspan", null, t).textContent = String(cfg.beats[0].lines[i] || "");
+      svgEl("tspan", { class: "ob-tagstatus" }, t).textContent = cfg.focusStatus[i] ? " · " + String(cfg.focusStatus[i]) : "";
       return t;
     });
 
@@ -226,9 +226,9 @@ window.Orbit = (function () {
       smallRings = [0, 1].map(() => svgEl("circle", { fill: "none", stroke: ACC, "stroke-opacity": 0.4 }, figSvg));
       bigC = svgEl("circle", { fill: "#fff", "fill-opacity": 0.04, stroke: "#fff", "stroke-opacity": 0.6 }, figSvg);
       bigTxt = svgEl("text", { class: "ob-mono ob-figlabel", "text-anchor": "middle" }, figSvg);
-      bigTxt.textContent = cfg.figureLabels[0].toUpperCase();
+      bigTxt.textContent = cfg.figureLabels[0];
       smallTxt = svgEl("text", { class: "ob-mono ob-figlabel ob-accent", "text-anchor": "middle" }, figSvg);
-      smallTxt.textContent = cfg.figureLabels[1].toUpperCase();
+      smallTxt.textContent = cfg.figureLabels[1];
     }
     const panel = div("ob-panel", ui);
     const ph = div("ob-panelhead ob-mono", panel);

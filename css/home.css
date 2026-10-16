@@ -391,3 +391,6 @@
 .hero__hud span { font-size: 14px; }
 .foot__cta .foot__btn { color: #ecece4; }
 .foot__cta .foot__copy { color: var(--ink); }
+
+/* English headlines run longer than the Korean ones: reserve three lines on phones */
+@media (max-width: 720px) { .st__title, .tribunal .st__title { min-height: 3.3em; } }

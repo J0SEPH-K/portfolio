@@ -15,7 +15,7 @@
   let D, byId, catName;
   const st = { q: "", sort: "rank", cat: 0, view: "trending", topic: 0 };
 
-  fetch("data.json?v=10162030").then((r) => r.json()).then((d) => {
+  fetch("data.json?v=10162045").then((r) => r.json()).then((d) => {
     D = d;
     byId = new Map(d.videos.map((v) => [v.id, v]));
     catName = new Map(d.categories.items.map((c) => [c.id, c.name]));
