@@ -1,1 +1,0 @@
-{"status":200,"body":{"data":[{"id":"free","name":"Free","price_usd":0,"daily_analyses":3,"platforms":["youtube","tiktok"],"regions":"all"},{"id":"pro","name":"Pro","price_usd":9.99,"daily_analyses":50,"platforms":["youtube","tiktok"],"regions":"all"},{"id":"max","name":"Max","price_usd":29.99,"daily_analyses":null,"platforms":["youtube","tiktok"],"regions":"all"}],"ok":true}}

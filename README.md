@@ -18,6 +18,7 @@ The hero/work-list motion takes cues from [Bulletproof](https://www.wearebulletp
 
 ## GoCreaty demo
 
-`work/gocreaty/` is the real GoCreaty frontend (Next.js 14), statically exported. The signed-in app is served
-from API responses recorded off the real backend running against real (snapshot) trend data; `lib/demo/mock.ts`
-answers requests in the browser, and write actions (analyze, chat) are simulated client-side.
+`work/gocreaty/` is a vanilla rebuild of GoCreaty's signed-in experience in this portfolio's style. `data.json` is a
+snapshot pulled from the real backend against real trend data: 120 trending Shorts, each with its full analysis record
+(reach verdict, 9 dimension scores, moment map, predicted retention, replication steps), view-count snapshots, 60
+viral topics and the top creators. The "Ask" panel answers only from that Short's analysis record and cites the field.

@@ -1,1 +1,0 @@
-self.__SSG_MANIFEST=new Set(["\u002Fanalyze\u002F[videoId]","\u002Fpurchase\u002F[planId]","\u002Ftrends\u002F[videoId]"]);self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB()

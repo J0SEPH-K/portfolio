@@ -155,7 +155,7 @@
     ["LIVE DEMO", "Real CV detector · Web Worker"],
     ["LIVE DEMO", "BM25 RAG · add your own docs"],
     ["LIVE DEMO", "100k rows · brush · CSV export"],
-    ["LIVE APP", "Next.js · React Query · real trend data"],
+    ["LIVE DEMO", "Real trend data · grounded Q&A"],
   ];
   let active = -1, hovering = false;
   const fitIframes = () => {
