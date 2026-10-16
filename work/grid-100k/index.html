@@ -1,17 +1,17 @@
 <!doctype html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Grid 100K — Wholesale Data Grid</title>
-  <meta name="description" content="10만 건 농수산물 도매 거래 데이터를 가상 스크롤·즉시 필터·정렬·집계 차트로 다루는 데이터 그리드 데모.">
+  <meta name="description" content="A data grid demo over 100,000 wholesale produce trades: virtual scrolling, instant filters, sorting and aggregate charts.">
   <meta name="theme-color" content="#08090b">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/base.css?v=10162045">
-  <link rel="stylesheet" href="../../css/demo.css?v=10162045">
-  <link rel="stylesheet" href="style.css?v=10162045">
+  <link rel="stylesheet" href="../../css/base.css?v=10162115">
+  <link rel="stylesheet" href="../../css/demo.css?v=10162115">
+  <link rel="stylesheet" href="style.css?v=10162115">
 </head>
 <body>
   <header class="bar">
@@ -25,20 +25,20 @@
   </header>
 
   <main class="grid">
-    <form class="filters" data-filters role="search" aria-label="필터">
-      <label class="f f--search"><span class="mono">Search</span><input type="search" name="q" placeholder="품목·산지·거래번호" autocomplete="off"></label>
-      <label class="f"><span class="mono">Market</span><select name="market"><option value="">전체 시장</option></select></label>
-      <label class="f"><span class="mono">Item</span><select name="item"><option value="">전체 품목</option></select></label>
+    <form class="filters" data-filters role="search" aria-label="Filters">
+      <label class="f f--search"><span class="mono">Search</span><input type="search" name="q" placeholder="Item, origin or trade ID" autocomplete="off"></label>
+      <label class="f"><span class="mono">Market</span><select name="market"><option value="">All markets</option></select></label>
+      <label class="f"><span class="mono">Item</span><select name="item"><option value="">All items</option></select></label>
       <fieldset class="f f--grades"><legend class="mono">Grade</legend><div data-grades></div></fieldset>
-      <label class="f"><span class="mono">Status</span><select name="status"><option value="">전체 상태</option></select></label>
+      <label class="f"><span class="mono">Status</span><select name="status"><option value="">All statuses</option></select></label>
       <button type="button" class="chip mono f__reset" data-reset>Reset</button>
     </form>
 
-    <section class="kpis" aria-label="집계">
+    <section class="kpis" aria-label="Totals">
       <div class="kpi"><span class="mono">Rows</span><b data-k="rows">—</b><small class="mono" data-k="of"></small></div>
       <div class="kpi"><span class="mono">Volume</span><b data-k="vol">—</b><small class="mono">tonnes</small></div>
-      <div class="kpi"><span class="mono">Avg price</span><b data-k="avg">—</b><small class="mono">원/kg · weighted</small></div>
-      <div class="kpi"><span class="mono">Amount</span><b data-k="amt">—</b><small class="mono">억원</small></div>
+      <div class="kpi"><span class="mono">Avg price</span><b data-k="avg">—</b><small class="mono">₩/kg · weighted</small></div>
+      <div class="kpi"><span class="mono">Amount</span><b data-k="amt">—</b><small class="mono">excludes no-sale trades</small></div>
       <div class="kpi kpi--chart">
         <span class="mono">Daily amount · last 60 days <span class="dim" data-day-label>— drag to select days</span></span>
         <canvas data-chart height="70"></canvas>
@@ -49,20 +49,20 @@
       </div>
     </section>
 
-    <section class="table" aria-label="거래 내역">
-      <div class="table__scroll" data-scroll tabindex="0" role="grid" aria-label="거래 내역 표" aria-rowcount="0">
+    <section class="table" aria-label="Trades">
+      <div class="table__scroll" data-scroll tabindex="0" role="grid" aria-label="Trades table" aria-rowcount="0">
         <div class="thead" role="row" data-head></div>
         <div class="tbody" data-body role="rowgroup"><div class="spacer" data-spacer></div></div>
-        <div class="tempty" data-empty hidden>조건에 맞는 거래가 없습니다. 필터를 줄여 보세요.</div>
+        <div class="tempty" data-empty hidden>No trades match these filters. Try loosening them.</div>
       </div>
     </section>
 
-    <aside class="detail" data-detail hidden aria-label="거래 상세">
+    <aside class="detail" data-detail hidden aria-label="Trade detail">
       <button class="chip mono detail__close" data-detail-close>✕</button>
       <div data-detail-body></div>
     </aside>
   </main>
 
-  <script src="app.js?v=10162045"></script>
+  <script src="app.js?v=10162115"></script>
 </body>
 </html>

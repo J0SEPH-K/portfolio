@@ -9,18 +9,18 @@
   const W = 1200, H = 750;
   const NAME = { SCRATCH: "Scratch", DEAD_PX: "Dead pixel", PARTICLE: "Particle", BUBBLE: "Bubble", MURA: "Mura" };
   const CLASSES = [
-    { id: "SCRATCH", ko: "스크래치", color: "#ff6b3d", critical: true },
-    { id: "DEAD_PX", ko: "불량 화소", color: "#ff3d7f", critical: true },
-    { id: "PARTICLE", ko: "이물", color: "#4dc3ff" },
-    { id: "BUBBLE", ko: "기포", color: "#ffd23d" },
-    { id: "MURA", ko: "얼룩(무라)", color: "#c38bff" },
+    { id: "SCRATCH", ko: "Line scratch on the panel surface", color: "#ff6b3d", critical: true },
+    { id: "DEAD_PX", ko: "Stuck or dead pixel", color: "#ff3d7f", critical: true },
+    { id: "PARTICLE", ko: "Foreign particle", color: "#4dc3ff" },
+    { id: "BUBBLE", ko: "Trapped air bubble", color: "#ffd23d" },
+    { id: "MURA", ko: "Mura: uneven brightness", color: "#c38bff" },
   ];
   const CLS = Object.fromEntries(CLASSES.map(c => [c.id, c]));
   const enabled = new Set(CLASSES.map(c => c.id));
   let tau = 0.75;
 
   /* ---------- detector worker ---------- */
-  const worker = new Worker("detector.js?v=10162045");
+  const worker = new Worker("detector.js?v=10162115");
   let jobId = 0;
   const pending = new Map();
   worker.onmessage = e => { const r = pending.get(e.data.id); pending.delete(e.data.id); r && r(e.data); };
@@ -120,9 +120,9 @@
   const hit = (d, b) => d.x < b.x + b.w + 6 && b.x - 6 < d.x + d.w && d.y < b.y + b.h + 6 && b.y - 6 < d.y + d.h;
   function judge(p) {
     const hits = p.dets.filter(counts);
-    if (!hits.length) return { ng: false, why: "τ 이상 결함 없음" };
+    if (!hits.length) return { ng: false, why: "No defect at or above τ" };
     const top = hits.slice().sort((a, b) => (!!CLS[b.cls].critical - !!CLS[a.cls].critical) || b.conf - a.conf)[0];
-    return { ng: true, why: `${CLS[top.cls].ko} ${top.conf.toFixed(2)} ≥ τ ${tau.toFixed(2)}`, cause: top.cls };
+    return { ng: true, why: `${NAME[top.cls]} ${top.conf.toFixed(2)} ≥ τ ${tau.toFixed(2)}`, cause: top.cls };
   }
   function evaluate(t) {
     let tp = 0, fp = 0, fn = 0;
@@ -285,7 +285,7 @@
   function renderDets() {
     const ol = $("[data-dets]"), list = cur.dets.slice().sort((a, b) => b.conf - a.conf);
     $("[data-count]").textContent = `${list.filter(counts).length} / ${list.length}`;
-    if (!list.length) { ol.innerHTML = '<li class="empty">검출 없음 · 깨끗한 패널</li>'; return; }
+    if (!list.length) { ol.innerHTML = '<li class="empty">No detections · clean panel</li>'; return; }
     ol.innerHTML = "";
     list.forEach(d => {
       const li = document.createElement("li"), on = counts(d);

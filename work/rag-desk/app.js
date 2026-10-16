@@ -13,7 +13,10 @@
   /* ---------- tokenizer ---------- */
   const STOP = new Set(["어떻", "떻게", "해야", "하나", "나요", "뭐야", "인가", "가요", "는지", "있나", "얼마", "마나", "무엇", "엇인",
     "알려", "려줘", "합니", "니까", "까요", "되나", "돼요", "는데", "은데", "하면", "해요", "주세", "세요", "그럼", "그러", "러면", "그건", "그거", "이때", "경우",
-    "the", "a", "an", "is", "are", "of", "to", "in", "and", "or", "what", "how", "why", "do", "does", "it", "for", "on", "with", "be", "i", "you", "this", "that"]);
+    "the", "a", "an", "is", "are", "of", "to", "in", "and", "or", "what", "how", "why", "do", "does", "it", "for", "on", "with", "be", "i", "you", "this", "that",
+    "if", "when", "my", "me", "can", "should", "there", "get", "about", "much", "many", "will", "would", "we", "our", "its", "by", "at", "as", "who", "which", "then", "so", "than", "into", "tell"]);
+  // light English stemming so "alarm" and "alarms", "calibrate" and "calibrated" meet
+  const stem = w => w.length > 4 ? w.replace(/(ing|ed|es|s)$/, "").replace(/e$/, "") : w.length > 3 && /[^s]s$/.test(w) ? w.slice(0, -1) : w;
   function tokens(text) {
     const out = [];
     text.toLowerCase().split(/[^0-9a-z가-힣℃%]+/).forEach(w => {
@@ -21,7 +24,7 @@
       if (/[가-힣]/.test(w)) {
         if (w.length === 1) return;
         for (let i = 0; i < w.length - 1; i++) { const bg = w.slice(i, i + 2); if (!STOP.has(bg)) out.push(bg); }
-      } else if (!STOP.has(w)) out.push(w);
+      } else if (!STOP.has(w)) out.push(stem(w));
     });
     return out;
   }
@@ -84,12 +87,12 @@
   }
   function addDoc(title, text) {
     const chunksOf = chunkText(text);
-    if (!chunksOf.length) return toast("문서에 텍스트가 없습니다.");
-    const doc = { id: "u" + Date.now(), title: title.slice(0, 60) || "붙여넣은 문서", tag: "내 문서", chunks: chunksOf };
+    if (!chunksOf.length) return toast("The document has no text.");
+    const doc = { id: "u" + Date.now(), title: title.slice(0, 60) || "Pasted document", tag: "My document", chunks: chunksOf };
     userDocs.push(doc);
     try { localStorage.setItem(SAVE, JSON.stringify(userDocs)); } catch {}
     buildIndex();
-    toast(`색인 완료 · “${doc.title}” · ${chunksOf.length} chunks`);
+    toast(`Indexed · “${doc.title}” · ${chunksOf.length} chunks`);
     renderSuggestions();
   }
   const add = $("[data-add]"), file = $("[data-file]");
@@ -126,7 +129,7 @@
   function renderEvidence(ranked, cited, qset, ms) {
     const ol = $("[data-ev]"), max = ranked[0]?.score || 1;
     $("[data-ev-meta]").textContent = ranked.length ? `top ${ranked.length} of ${N} · ${ms.toFixed(2)} ms` : `0 of ${N} cleared the bar`;
-    ol.innerHTML = ranked.length ? "" : '<li class="ev__empty">질문을 뒷받침하는 문단이 없습니다. 그래서 답하지 않았습니다.</li>';
+    ol.innerHTML = ranked.length ? "" : '<li class="ev__empty">No passage supports this question, so there is no answer.</li>';
     ranked.forEach((r, i) => {
       const li = document.createElement("li");
       li.className = "card" + (cited.has(i) ? " cited" : "");
@@ -147,10 +150,10 @@
   const log = $("[data-log]");
   const scroll = () => (log.scrollTop = log.scrollHeight);
   function rewrite(q) {
-    const follow = q.replace(/[\s?？!.]/g, "").length <= 6 || /^(그럼|그러면|그건|그거|그때|이때|그 경우|왜|더|자세히|and |what about)/i.test(q.trim());
+    const follow = q.replace(/[\s?？!.]/g, "").length <= 6 || /^(그럼|그러면|그건|그거|그때|이때|그 경우|왜|더|자세히|and |what about|what if|then|why|more|and if)/i.test(q.trim());
     return follow && lastTerms.length ? { text: `${q} (${lastTerms.join(" ")})`, rewritten: true } : { text: q, rewritten: false };
   }
-  const topicTerms = q => q.split(/\s+/).filter(w => /[가-힣a-z]{2,}/i.test(w) && !/^(어떻게|무엇|얼마나|언제|하나요|뭐야|있나요|알려줘|해야|what|how|why|does|the)$/i.test(w)).slice(0, 3)
+  const topicTerms = q => q.split(/\s+/).filter(w => /[가-힣a-z]{2,}/i.test(w) && !/^(어떻게|무엇|얼마나|언제|하나요|뭐야|있나요|알려줘|해야|what|how|why|does|the|when|is|are|if|do|can|should|much|many|long|within)$/i.test(w)).slice(0, 3)
     .map(w => w.replace(/(은|는|이|가|을|를|의|에|에서|으로|로|와|과|도|만|이면|면)$/, ""));
 
   async function ask(q) {
@@ -179,7 +182,7 @@
       renderEvidence([], new Set(), qset, ms);
       await step("compose <b>refuse</b>", 120);
       answer.classList.add("refuse");
-      await type(answer, [{ text: "등록된 문서에서 이 질문의 근거를 찾지 못했습니다. 추측으로 답하지 않습니다. 질문을 바꾸거나, 관련 문서를 왼쪽 라이브러리에 추가해 보세요." }]);
+      await type(answer, [{ text: "I found no evidence for this in the indexed documents, so I won't guess. Rephrase the question, or add a relevant document to the library on the left." }]);
       lastTerms = [];
       return done();
     }
@@ -191,7 +194,7 @@
     });
     renderEvidence(kept, cited, qset, ms);
     await step(`compose <b>${parts.length} sentences · ${cited.size} cited</b>`, 120);
-    await type(answer, [{ text: "문서 기준으로 정리하면:", lead: true }, ...parts]);
+    await type(answer, [{ text: "According to the documents:", lead: true }, ...parts]);
     const fu = SUGGEST.filter(s => parts.some(p => p.chunk.doc.id === s.doc) && s.q !== q).slice(0, 2);
     if (fu.length) {
       const f = document.createElement("div"); f.className = "follow";
@@ -212,7 +215,7 @@
       if (p.src !== undefined) {
         const b = document.createElement("button");
         b.className = "cite"; b.textContent = p.src + 1;
-        b.setAttribute("aria-label", `출처 ${p.src + 1}: ${p.chunk.doc.title}`);
+        b.setAttribute("aria-label", `Source ${p.src + 1}: ${p.chunk.doc.title}`);
         const card = () => $(`.card[data-i="${p.src}"]`);
         b.onmouseenter = () => { span.classList.add("hot"); card()?.classList.add("hot"); };
         b.onmouseleave = () => { span.classList.remove("hot"); card()?.classList.remove("hot"); };
@@ -226,21 +229,21 @@
 
   /* ---------- suggestions ---------- */
   const SUGGEST = [
-    { q: "사과 특 등급 기준이 뭐야?", doc: "grade" },
-    { q: "출하 정산은 며칠 안에 지급돼?", doc: "settle" },
-    { q: "저온저장고 경보가 울리면 어떻게 해야 해?", doc: "cold" },
-    { q: "정전되면?", doc: "cold" },
-    { q: "선별 카메라 보정 주기는?", doc: "machine" },
-    { q: "수수료는 얼마야?", doc: "settle" },
-    { q: "장애가 30분 넘게 계속되면?", doc: "incident" },
+    { q: "What makes an apple grade AA?", doc: "grade" },
+    { q: "How soon is shipment settlement paid?", doc: "settle" },
+    { q: "What do I do when the cold storage alarm sounds?", doc: "cold" },
+    { q: "And during a power outage?", doc: "cold" },
+    { q: "How often is the sorting camera calibrated?", doc: "machine" },
+    { q: "What is the consignment fee?", doc: "settle" },
+    { q: "What if an outage lasts over 30 minutes?", doc: "incident" },
   ];
   function renderSuggestions() {
     const box = $("[data-sugg]"); if (!box) return;
     box.innerHTML = "";
     [0, 1, 2, 4].forEach(i => { const b = document.createElement("button"); b.textContent = SUGGEST[i].q; b.onclick = () => ask(SUGGEST[i].q); box.appendChild(b); });
-    const r = document.createElement("button"); r.className = "ghost"; r.textContent = "오늘 서울 날씨 어때?"; r.title = "근거 없는 질문 — 거절 동작"; r.onclick = () => ask(r.textContent); box.appendChild(r);
+    const r = document.createElement("button"); r.className = "ghost"; r.textContent = "What's the weather in Seoul today?"; r.title = "No evidence in the documents: watch it refuse"; r.onclick = () => ask(r.textContent); box.appendChild(r);
     const mine = userDocs[userDocs.length - 1];
-    if (mine) { const b = document.createElement("button"); b.textContent = `“${mine.title}” 요약해줘`; b.onclick = () => ask(`${mine.title} ${mine.chunks[0].slice(0, 40)}`); box.appendChild(b); }
+    if (mine) { const b = document.createElement("button"); b.textContent = `Summarize “${mine.title}”`; b.onclick = () => ask(`${mine.title} ${mine.chunks[0].slice(0, 40)}`); box.appendChild(b); }
   }
 
   const ta = $("#q");

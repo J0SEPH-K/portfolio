@@ -92,12 +92,12 @@ window.Tribunal = function Tribunal(section) {
     return span <= 0 ? 0 : clamp(-r.top / span, 0, 1);
   };
   const STATUS = [
-    () => "Super Judge · 규칙은 당신의 말 그대로 · 모호하면 먼저 묻습니다",
-    () => `8 agents · 아이디어 8개 · 조사 중 · 직접 만든 도구 ${agents.filter(a => a.tool > 0.5).length}개`,
-    () => `주장 ${tally.made} · 출처 확인 ${tally.ok} · 기각 ${tally.struck}`,
-    () => `Judge A → Agent 0${PICKS[0] + 1} · B → 0${PICKS[1] + 1} · C → 0${PICKS[2] + 1} · 토론은 계속됩니다`,
-    () => `보고서 3건 · 문장 ${tally.lines} · 출처 없는 문장 0`,
-    () => `Winner · Agent 0${WIN + 1} · 당신의 기준을 바꾸지 않고 판정`,
+    () => "Super Judge · rules taken word for word from you · asks before it assumes",
+    () => `8 agents · 8 ideas · researching · ${agents.filter(a => a.tool > 0.5).length} self-built tools`,
+    () => `Claims ${tally.made} · sourced ${tally.ok} · struck ${tally.struck}`,
+    () => `Judge A → Agent 0${PICKS[0] + 1} · B → 0${PICKS[1] + 1} · C → 0${PICKS[2] + 1} · the debate goes on`,
+    () => `3 reports · ${tally.lines} lines · 0 unsourced`,
+    () => `Winner · Agent 0${WIN + 1} · judged by your rules, unchanged`,
   ];
   const setText = (el, t) => { if (el.textContent !== t) el.textContent = t; };
 
@@ -211,7 +211,7 @@ window.Tribunal = function Tribunal(section) {
       g.fillStyle = `rgba(${c},${al.toFixed(3)})`;
       g.fillRect(s.x - sz / 2, s.y - sz / 2, sz, sz);
     });
-    label(ox, oy + gh + 12, "Sources · 논문 · 공공데이터 · 문서 · 원문", INK, 0.5);
+    label(ox, oy + gh + 12, "Sources · papers · public data · documents · originals", INK, 0.5);
 
     // research rays
     for (let i = rays.length - 1; i >= 0; i--) {
@@ -244,7 +244,7 @@ window.Tribunal = function Tribunal(section) {
           else {
             const k = 5;
             line(mx - k, my - k, mx + k, my + k, WARN, fade, 1.5); line(mx + k, my - k, mx - k, my + k, WARN, fade, 1.5);
-            label(mx + 9, my - 6, "출처 없음 · 기각", WARN, fade);
+            label(mx + 9, my - 6, "No source · struck", WARN, fade);
             label(tx, ty + 4, "?", WARN, 0.8 * fade, "center");
           }
         }
@@ -283,7 +283,7 @@ window.Tribunal = function Tribunal(section) {
       const f = smooth(q.t), x = lerp(q.from.x, q.to.x, f), y = lerp(q.from.y, q.to.y, f);
       g.fillStyle = `rgba(${q.q ? WARN : INK},0.95)`;
       g.fillRect(x - 2.5, y - 2.5, 5, 5);
-      if (q.q) label(x, y - 9, "확인 질문?", WARN, 0.95, "center");
+      if (q.q) label(x, y - 9, "Clarify?", WARN, 0.95, "center");
     }
     line(you.x, you.y, sup.x, sup.y, INK, 0.25 * Math.max(you.a, 0.4), 1, phase === 5 ? null : [2, 3]);
 
@@ -300,7 +300,7 @@ window.Tribunal = function Tribunal(section) {
     g.fillStyle = `rgba(${INK},${you.a})`;
     g.strokeStyle = `rgba(${INK},${you.a})`; g.lineWidth = 1.25;
     g.strokeRect(you.x - 5, you.y - 5, 10, 10);
-    label(you.x, you.y - 14, narrow ? "You" : "You · 브리프", INK, you.a, narrow ? "left" : "center");
+    label(you.x, you.y - 14, narrow ? "You" : "You · brief", INK, you.a, narrow ? "left" : "center");
 
     g.save(); g.translate(sup.x, sup.y); g.rotate(Math.PI / 4);
     g.fillStyle = `rgba(${INK},${sup.a})`; g.fillRect(-7, -7, 14, 14);

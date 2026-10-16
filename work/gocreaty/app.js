@@ -15,7 +15,7 @@
   let D, byId, catName;
   const st = { q: "", sort: "rank", cat: 0, view: "trending", topic: 0 };
 
-  fetch("data.json?v=10162045").then((r) => r.json()).then((d) => {
+  fetch("data.json?v=10162115").then((r) => r.json()).then((d) => {
     D = d;
     byId = new Map(d.videos.map((v) => [v.id, v]));
     catName = new Map(d.categories.items.map((c) => [c.id, c.name]));
@@ -159,9 +159,9 @@
               <div class="chat">
                 <div class="chat__log" data-log aria-live="polite"></div>
                 <div class="chips" data-chips>
-                  ${["Why is it trending?", "How do I fix it?", "Where do viewers drop?", "Who is it for?", "훅이 왜 좋아?"].map((q) => `<button>${q}</button>`).join("")}
+                  ${["Why is it trending?", "How do I fix it?", "Where do viewers drop?", "Who is it for?", "Why does the hook work?"].map((q) => `<button>${q}</button>`).join("")}
                 </div>
-                <form class="ask" data-ask><input placeholder="Ask about hook, retention, sound, thumbnail…" aria-label="질문"><button aria-label="Send">↵</button></form>
+                <form class="ask" data-ask><input placeholder="Ask about hook, retention, sound, thumbnail…" aria-label="Question"><button aria-label="Send">↵</button></form>
               </div>
             </div>
           </div>
@@ -403,8 +403,8 @@
     $("[data-board]").innerHTML = list.map((c, i) => `
       <li tabindex="0" data-c="${esc(c.creator_name)}">
         <span class="n">${String(i + 1).padStart(2, "0")}</span>
-        ${c.creator_avatar_url ? `<img src="${esc(c.creator_avatar_url)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<span class="av">${esc(c.creator_name[0])}</span>`}
-        <div><b>${esc(c.creator_name)}</b><small>${fmt(c.follower_count)} subscribers · ${c.trending_video_count} trending</small>
+        ${c.creator_avatar_url ? `<img src="${esc(c.creator_avatar_url)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">` : `<span class="av">${esc(c.creator_name[0])}</span>`}
+        <div><b>${esc(c.creator_name)}</b><small>${c.trending_video_count} trending Short${c.trending_video_count > 1 ? "s" : ""}${c.follower_count ? ` · ${fmt(c.follower_count)} subscribers` : ""}</small>
           <div class="bar2"><i style="width:${(c.trending_views / max) * 100}%"></i></div></div>
         <div class="v">${fmt(c.trending_views)}<small class="mono">trending views</small></div>
       </li>`).join("");

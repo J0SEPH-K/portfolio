@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Jungjun Kim</title>
-  <meta name="description" content="산업 AI를 위한 프론트엔드 포트폴리오: 머신비전 검사 대시보드, RAG 챗봇, 대용량 공공 데이터 그리드. AI 에이전트 워크플로로 설계·구현·검증.">
+  <meta name="description" content="Frontend portfolio for industrial AI: a machine-vision inspection dashboard, a RAG chatbot and a large public-data grid, designed, built and verified with an AI-agent workflow.">
   <meta property="og:title" content="Jungjun Kim — Frontend for Industrial AI">
   <meta property="og:description" content="Vision QC · RAG Desk · Grid 100K — interactive frontend demos built with an agentic workflow.">
   <meta name="theme-color" content="#08090b">
@@ -12,8 +12,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/base.css?v=10162045">
-  <link rel="stylesheet" href="css/home.css?v=10162045">
+  <link rel="stylesheet" href="css/base.css?v=10162115">
+  <link rel="stylesheet" href="css/home.css?v=10162115">
 </head>
 <body class="is-loading">
 
@@ -57,16 +57,16 @@
         <span class="hl hl--4"><span>AI<em>.</em></span></span>
       </h1>
       <p class="hero__sub">
-        검사장비, RAG 챗봇, 공공 플랫폼처럼 <strong>현장에서 실제로 쓰이는 AI</strong>의 화면을 만듭니다.
-        레퍼런스 분석부터 구현·검증·배포까지 AI 에이전트와 함께 일합니다.
+        I build the screens for <strong>AI that is actually used on the floor</strong>: inspection equipment, RAG chatbots, public platforms.
+        From reference analysis to build, verification and release, I work alongside AI agents.
       </p>
       <a href="#work" class="hero__scroll mono">Scroll to inspect <span aria-hidden="true">↓</span></a>
     </section>
 
     <!-- STATEMENT: sticky stage; scroll moves through three states, the cursor scans the lot -->
-    <section class="statement" aria-label="정확도와 신뢰">
+    <section class="statement" aria-label="Accuracy and trust">
       <div class="st">
-        <canvas class="st__bg" aria-label="1,000개 검사 유닛. 커서로 훑거나 클릭하면 오판이 드러납니다."></canvas>
+        <canvas class="st__bg" aria-label="1,000 inspected units. Sweep or click with the cursor to reveal the misjudged ones."></canvas>
         <div class="st__layer">
           <p class="mono mono-sq st__tag">001 — Perspective</p>
           <h2 class="st__title">
@@ -84,7 +84,7 @@
     </section>
 
     <!-- DOMAIN MAP: a tall track with a sticky stage; js/orbit.js renders the scene -->
-    <section class="domain" id="domain" aria-label="산업 AI 도메인 맵">
+    <section class="domain" id="domain" aria-label="Industrial AI domain map">
       <div class="domain__stage"></div>
     </section>
 
@@ -110,15 +110,15 @@
         </div>
       </div>
       <div class="work__foot mono">
-        <span>01–04 직접 조작 가능한 라이브 데모</span>
-        <span>04 실제 서비스 프론트엔드 · 실데이터</span>
+        <span>01–04 Live demos you can operate</span>
+        <span>04 Real product · real data</span>
       </div>
     </section>
 
     <!-- AGENTIC WORKFLOW: sticky stage; scroll moves through the six states of a debate tribunal (js/tribunal.js) -->
-    <section class="tribunal" id="process" aria-label="에이전트 워크플로">
+    <section class="tribunal" id="process" aria-label="Agentic workflow">
       <div class="st">
-        <canvas class="st__bg" aria-label="에이전트 8명이 조사하고 토론하며, 심판 3명과 슈퍼 심판이 판정합니다. 클릭하면 가장 가까운 에이전트가 발언합니다."></canvas>
+        <canvas class="st__bg" aria-label="Eight agents research and debate while three judges and a super judge rule. Click to make the nearest agent speak."></canvas>
         <div class="st__layer">
           <p class="mono mono-sq st__tag">004 — Agentic workflow</p>
           <h2 class="st__title">
@@ -150,10 +150,10 @@
       <div class="foot__cta">
         <p class="mono mono-sq">005 — Contact</p>
         <h2>Ready for your<br>next interface</h2>
-        <p class="foot__ko">다음 화면을 함께 만들어요.</p>
+        <p class="foot__ko">Let's build the next screen together.</p>
         <div class="foot__actions">
           <a class="foot__btn mono" data-email href="#">Email me</a>
-          <button type="button" class="foot__copy mono" data-copy aria-label="이메일 주소 복사"><span data-email-text></span><i>Copy</i></button>
+          <button type="button" class="foot__copy mono" data-copy aria-label="Copy email address"><span data-email-text></span><i>Copy</i></button>
         </div>
       </div>
       <div class="foot__grid mono">
@@ -181,11 +181,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="js/loader.js?v=10162045"></script>
-  <script src="js/scanfield.js?v=10162045"></script>
-  <script src="js/orbit.js?v=10162045"></script>
-  <script src="js/tribunal.js?v=10162045"></script>
-  <script src="js/statement.js?v=10162045"></script>
-  <script src="js/home.js?v=10162045"></script>
+  <script src="js/loader.js?v=10162115"></script>
+  <script src="js/scanfield.js?v=10162115"></script>
+  <script src="js/orbit.js?v=10162115"></script>
+  <script src="js/tribunal.js?v=10162115"></script>
+  <script src="js/statement.js?v=10162115"></script>
+  <script src="js/home.js?v=10162115"></script>
 </body>
 </html>

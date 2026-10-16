@@ -1,16 +1,16 @@
 <!doctype html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Vision QC</title>
-  <meta name="description" content="실제로 동작하는 머신비전 검사 콘솔: 패널 픽셀에서 결함을 검출하고, 임계값에 따라 판정과 정밀도·재현율이 실시간으로 바뀝니다.">
+  <meta name="description" content="A working machine-vision inspection console: it detects defects in panel pixels, and the verdict, precision and recall update live as you move the threshold.">
   <meta name="theme-color" content="#08090b">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/base.css?v=10162045">
-  <link rel="stylesheet" href="style.css?v=10162045">
+  <link rel="stylesheet" href="../../css/base.css?v=10162115">
+  <link rel="stylesheet" href="style.css?v=10162115">
 </head>
 <body>
   <header class="bar">
@@ -24,20 +24,20 @@
   </header>
 
   <main class="qc">
-    <section class="stage" aria-label="검사 이미지">
+    <section class="stage" aria-label="Inspection image">
       <div class="stage__head mono">
         <span data-panel>Panel —</span>
         <span class="stage__hint">Drag to scratch · Click to drop a particle · Drop an image to inspect</span>
       </div>
       <div class="stage__view" data-view>
-        <canvas class="stage__cv" aria-label="검사 중인 패널과 검출된 결함"></canvas>
+        <canvas class="stage__cv" aria-label="Panel under inspection with detected defects"></canvas>
         <div class="tip mono" role="tooltip" hidden></div>
         <div class="drop mono" hidden>Drop to inspect</div>
       </div>
-      <div class="strip" data-strip aria-label="최근 패널"></div>
+      <div class="strip" data-strip aria-label="Recent panels"></div>
     </section>
 
-    <aside class="rail" aria-label="판정">
+    <aside class="rail" aria-label="Verdict">
       <div class="verdict" data-verdict>
         <span class="mono">Verdict</span>
         <b>—</b>
@@ -47,7 +47,7 @@
       <div class="block">
         <label class="label mono" for="tau">Confidence τ <output data-tau>0.75</output></label>
         <input id="tau" type="range" min="0.5" max="0.98" step="0.01" value="0.75">
-        <canvas class="pr" data-pr aria-label="임계값에 따른 정밀도·재현율 곡선"></canvas>
+        <canvas class="pr" data-pr aria-label="Precision and recall versus threshold"></canvas>
         <p class="pr__legend mono"><span><i class="p"></i>Precision <b data-p>—</b></span><span><i class="r"></i>Recall <b data-r>—</b></span><span>Yield <b data-y>—</b></span></p>
       </div>
 
@@ -68,6 +68,6 @@
     </aside>
   </main>
 
-  <script src="app.js?v=10162045"></script>
+  <script src="app.js?v=10162115"></script>
 </body>
 </html>

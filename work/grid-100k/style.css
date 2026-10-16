@@ -10,7 +10,7 @@
 .export:hover { background: var(--fg); }
 .td mark { background: rgba(212,255,58,.25); color: var(--fg); border-radius: 2px; padding: 0 1px; }
 .top { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 5px; }
-.top li { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 8px; align-items: center; font-size: 14px; cursor: pointer; }
+.top li { display: grid; grid-template-columns: 96px minmax(0, 1fr) auto; gap: 10px; align-items: center; font-size: 14px; cursor: pointer; white-space: nowrap; }
 .top li:hover span { color: var(--accent); }
 .top i { display: block; height: 6px; border-radius: 3px; background: rgba(212,255,58,.55); transform-origin: left; transition: transform .45s var(--ease-out); }
 .kpi .top b { font-family: var(--f-mono); font-size: 14px; font-weight: 400; color: var(--fg-2); font-variant-numeric: tabular-nums; }
@@ -70,12 +70,12 @@
 .td { padding: 0 10px; display: flex; align-items: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 13px; }
 .td.num { justify-content: flex-end; font-family: var(--f-mono); font-size: 14px; font-variant-numeric: tabular-nums; }
 .td.id { font-family: var(--f-mono); font-size: 14px; color: var(--fg-3); }
-.gr { display: inline-grid; place-items: center; width: 22px; height: 20px; border-radius: 3px; font-size: 14px; background: var(--bg-3); }
-.gr--특 { background: var(--accent); color: var(--accent-ink); }
-.gr--상 { background: rgba(212,255,58,.35); }
+.gr { display: inline-grid; place-items: center; min-width: 24px; padding: 0 5px; height: 20px; border-radius: 3px; font-size: 14px; background: var(--bg-3); }
+.gr--AA { background: var(--accent); color: var(--accent-ink); }
+.gr--A { background: rgba(212,255,58,.35); }
 .st { font-family: var(--f-mono); font-size: 14px; }
-.st--유찰 { color: var(--warn); }
-.st--정산완료 { color: var(--ok); }
+.st--no-sale { color: var(--warn); }
+.st--settled { color: var(--ok); }
 .up { color: var(--warn); } .down { color: #4dc3ff; }
 .tempty { padding: 40px; text-align: center; color: var(--fg-3); }
 

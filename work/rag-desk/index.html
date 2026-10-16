@@ -1,16 +1,16 @@
 <!doctype html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>RAG Desk</title>
-  <meta name="description" content="문서 기반 질의응답 데모: 브라우저에서 문서를 색인하고(BM25), 근거 문장을 인용해 답하며, 근거가 없으면 답하지 않습니다. 직접 문서를 추가할 수 있습니다.">
+  <meta name="description" content="A document Q&A demo: documents are indexed in the browser (BM25), answers cite their supporting sentences, and it refuses when there is no evidence. Add your own documents.">
   <meta name="theme-color" content="#08090b">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/base.css?v=10162045">
-  <link rel="stylesheet" href="style.css?v=10162045">
+  <link rel="stylesheet" href="../../css/base.css?v=10162115">
+  <link rel="stylesheet" href="style.css?v=10162115">
 </head>
 <body>
   <header class="bar">
@@ -20,7 +20,7 @@
   </header>
 
   <main class="rag">
-    <aside class="lib" aria-label="문서 라이브러리">
+    <aside class="lib" aria-label="Document library">
       <p class="label mono">Library</p>
       <ul class="lib__docs" data-docs-list></ul>
       <label class="add" data-add tabindex="0">
@@ -30,7 +30,7 @@
       </label>
     </aside>
 
-    <section class="chat" aria-label="대화">
+    <section class="chat" aria-label="Conversation">
       <div class="chat__log" data-log aria-live="polite">
         <div class="hello" data-hello>
           <p class="mono">Ask the documents</p>
@@ -39,24 +39,24 @@
         </div>
       </div>
       <form class="composer" data-form>
-        <label class="sr-only" for="q">질문</label>
-        <textarea id="q" rows="1" placeholder="질문을 입력하세요 · Enter로 전송" autocomplete="off"></textarea>
-        <button type="submit" class="send" data-send aria-label="전송">↵</button>
+        <label class="sr-only" for="q">Question</label>
+        <textarea id="q" rows="1" placeholder="Ask a question · Enter to send" autocomplete="off"></textarea>
+        <button type="submit" class="send" data-send aria-label="Send">↵</button>
       </form>
     </section>
 
-    <aside class="ev" aria-label="근거">
+    <aside class="ev" aria-label="Evidence">
       <div class="ev__head mono"><span>Evidence</span><span data-ev-meta>—</span></div>
-      <ol class="ev__list" data-ev><li class="ev__empty">질문하면 검색된 문단이 점수와 함께 여기에 나타납니다. 질문과 일치한 단어가 강조됩니다.</li></ol>
+      <ol class="ev__list" data-ev><li class="ev__empty">Ask a question and the retrieved passages appear here with their scores. Words that match the question are highlighted.</li></ol>
       <div class="reader" data-reader hidden>
-        <div class="reader__head"><span class="mono" data-reader-title></span><button class="x mono" data-reader-close aria-label="닫기">✕</button></div>
+        <div class="reader__head"><span class="mono" data-reader-title></span><button class="x mono" data-reader-close aria-label="Close">✕</button></div>
         <div class="reader__body" data-reader-body></div>
       </div>
     </aside>
   </main>
 
   <div class="toast mono" data-toast hidden></div>
-  <script src="corpus.js?v=10162045"></script>
-  <script src="app.js?v=10162045"></script>
+  <script src="corpus.js?v=10162115"></script>
+  <script src="app.js?v=10162115"></script>
 </body>
 </html>

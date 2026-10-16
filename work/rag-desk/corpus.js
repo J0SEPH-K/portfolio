@@ -1,51 +1,51 @@
 // Fictional sample documents for the demo (not real policies of any organisation).
 window.CORPUS = [
   {
-    id: "grade", title: "APC 선별·등급 판정 기준", tag: "기준서",
+    id: "grade", title: "Packing house grading standard", tag: "Standard",
     chunks: [
-      "사과는 무게와 당도, 착색 비율로 등급을 판정한다. 특 등급은 개당 300g 이상, 당도 14브릭스 이상, 착색 비율 70% 이상이어야 한다. 상 등급은 250g 이상, 당도 12브릭스 이상, 착색 비율 50% 이상이다.",
-      "배는 무게와 과피 상태를 기준으로 판정한다. 특 등급은 개당 600g 이상이며 과피에 상처나 멍이 없어야 한다. 경미한 상처가 1개 이하이면 상 등급으로 분류한다.",
-      "비파괴 당도 측정기는 매일 작업 시작 전에 표준 시료로 보정한다. 보정 오차가 0.5브릭스를 넘으면 해당 라인의 등급 판정을 중지하고 설비 담당자에게 알린다.",
-      "선별 결과에 이의가 있는 농가는 출하일로부터 3일 이내에 재선별을 요청할 수 있다. 재선별은 다른 라인에서 수행하며 결과는 최종 판정으로 기록된다.",
+      "Apples are graded by weight, sugar content and color coverage. Grade AA apples must weigh at least 300 g each, reach 14 Brix or more, and show at least 70% color coverage. Grade A requires 250 g or more, 12 Brix or more, and at least 50% color coverage.",
+      "Pears are graded by weight and skin condition. Grade AA pears weigh at least 600 g each and have no cuts or bruises on the skin. A pear with at most one minor blemish is classed as grade A.",
+      "The non-destructive sugar meter is calibrated with a reference sample every day before work starts. If the calibration error exceeds 0.5 Brix, grading on that line stops and the equipment lead is notified.",
+      "A grower who disputes a grading result can request regrading within 3 days of shipment. Regrading is done on a different line, and its result is recorded as final.",
     ],
   },
   {
-    id: "settle", title: "출하 정산 절차", tag: "절차서",
+    id: "settle", title: "Shipment settlement procedure", tag: "Procedure",
     chunks: [
-      "출하 정산 대금은 경매 낙찰일 기준 영업일 2일 이내에 농가 계좌로 지급된다. 정산 금액은 낙찰가에서 위탁 수수료와 운송비, 선별 수수료를 공제한 금액이다.",
-      "위탁 수수료는 낙찰가의 7%이며, 선별 수수료는 상자당 300원이다. 운송비는 거리와 물량에 따라 산정되며 정산서에 항목별로 표시된다.",
-      "정산서는 지급일 오전 9시에 문자와 농가 포털로 동시에 발송된다. 정산 내역에 오류가 있으면 포털의 이의 신청 메뉴에서 7일 이내에 접수한다.",
+      "Settlement for a shipment is paid to the grower's account within 2 business days of the winning bid at auction. The settled amount is the winning bid minus the consignment fee, freight and the grading fee.",
+      "The consignment fee is 7% of the winning bid, and the grading fee is KRW 300 per box. Freight depends on distance and volume and is itemised on the settlement statement.",
+      "Settlement statements are sent at 9 a.m. on the payment day, by text message and on the grower portal at the same time. Errors in a statement are disputed through the portal's dispute menu within 7 days.",
     ],
   },
   {
-    id: "cold", title: "저온저장고 운영 매뉴얼", tag: "매뉴얼",
+    id: "cold", title: "Cold storage operating manual", tag: "Manual",
     chunks: [
-      "사과 저온저장고는 0~1℃, 상대습도 90~95%로 유지한다. 배 저장고는 1~2℃, 상대습도 85~90%가 적정하다.",
-      "저장고 온도가 설정값보다 2℃ 이상 벗어난 상태가 30분 넘게 지속되면 경보가 발생한다. 경보가 울리면 담당자는 15분 이내에 현장을 확인하고 냉각기와 출입문 상태를 점검한다.",
-      "정전 시에는 저장고 문을 열지 않는 것이 원칙이다. 문을 닫은 상태에서는 약 6시간 동안 적정 온도가 유지되며, 정전이 4시간 이상 지속되면 비상 발전기를 가동한다.",
+      "Apple cold storage is held at 0 to 1 ℃ with 90 to 95% relative humidity. Pear storage works best at 1 to 2 ℃ with 85 to 90% relative humidity.",
+      "An alarm fires when storage temperature stays more than 2 ℃ off its setpoint for over 30 minutes. When the alarm sounds, the operator must check the room within 15 minutes and inspect the chiller and the door seals.",
+      "During a power outage, the rule is to keep the storage doors closed. With the doors shut the room holds its temperature for about 6 hours; if the outage lasts 4 hours or more, start the emergency generator.",
     ],
   },
   {
-    id: "machine", title: "선별기 설비 점검 체크리스트", tag: "체크리스트",
+    id: "machine", title: "Sorting machine inspection checklist", tag: "Checklist",
     chunks: [
-      "선별기 컨베이어 벨트의 장력과 마모 상태는 매일 작업 전 육안으로 점검한다. 카메라 렌즈 청소는 하루 2회, 작업 시작 전과 점심 이후에 실시한다.",
-      "광학 선별 카메라는 주 1회 기준 색상판으로 보정한다. 보정 결과는 설비 관리 시스템에 기록하며, 기준 대비 색차가 허용치를 넘으면 렌즈와 조명을 교체한다.",
-      "베어링 윤활은 월 1회, 모터와 감속기 정밀 점검은 분기 1회 실시한다. 설비 점검 이력은 3년간 보관한다.",
+      "Check conveyor belt tension and wear visually every day before work. Clean the camera lenses twice a day, before work starts and after lunch.",
+      "Calibrate the optical sorting camera once a week against the reference color chart. Record the result in the maintenance system; if the color difference exceeds tolerance, replace the lens and the lighting.",
+      "Lubricate bearings once a month and inspect the motor and gearbox in detail once a quarter. Keep the equipment inspection history for 3 years.",
     ],
   },
   {
-    id: "privacy", title: "개인정보 처리 지침", tag: "지침",
+    id: "privacy", title: "Personal data handling policy", tag: "Policy",
     chunks: [
-      "농가 회원의 개인정보는 회원 탈퇴 후 지체 없이 파기한다. 다만 정산 및 세무 관련 기록은 관계 법령에 따라 5년간 보관한다.",
-      "개인정보 열람 권한은 업무상 필요한 최소 인원에게만 부여한다. 개인정보 처리 시스템의 접속 기록은 2년간 보관하고 월 1회 점검한다.",
+      "A grower member's personal data is destroyed without delay after the member leaves. Settlement and tax records, however, are kept for 5 years as required by law.",
+      "Access to personal data is granted only to the minimum number of staff who need it for their work. Access logs of the personal data system are kept for 2 years and reviewed once a month.",
     ],
   },
   {
-    id: "incident", title: "시스템 장애 대응 절차", tag: "절차서",
+    id: "incident", title: "System outage response procedure", tag: "Procedure",
     chunks: [
-      "경매 시스템 장애가 발생하면 운영팀은 5분 이내에 장애 공지를 게시하고 장애 등급을 판정한다. 1등급 장애는 경매 진행이 불가능한 상태를 의미한다.",
-      "1등급 장애가 30분 이상 지속되면 수기 경매로 전환한다. 수기 경매 결과는 시스템 복구 후 24시간 이내에 전산에 입력한다.",
-      "장애 종료 후 3영업일 이내에 원인 분석 보고서를 작성하고 재발 방지 대책을 공유한다.",
+      "When the auction system fails, the operations team posts an outage notice within 5 minutes and assigns a severity level. A severity 1 outage means the auction cannot run.",
+      "If a severity 1 outage lasts 30 minutes or more, the auction switches to manual bidding. Manual auction results are entered into the system within 24 hours of recovery.",
+      "Within 3 business days of the outage ending, a root cause report is written and the prevention measures are shared.",
     ],
   },
 ];
