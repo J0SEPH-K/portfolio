@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RAG Desk — Grounded Answers</title>
+  <meta name="description" content="문서 기반 RAG 챗봇 UI 데모: 스트리밍 답변, 문장별 인용, 원문 하이라이트, 근거 없을 때 거절.">
+  <meta name="theme-color" content="#08090b">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/demo.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="dbar">
+    <a class="dbar__back mono" href="../../index.html#work">← Portfolio</a>
+    <div class="dbar__title"><b>RAG DESK</b><span class="mono">Grounded answers over internal docs</span></div>
+    <div class="dbar__chips mono">
+      <span class="chip hide-sm">INDEX <b data-index-size>0</b> chunks</span>
+      <button class="chip" data-new>+ New chat</button>
+    </div>
+  </header>
+
+  <main class="rag">
+    <aside class="lib" aria-label="Document library">
+      <p class="mono lib__label">Library <span class="dim">· 가상 샘플 문서</span></p>
+      <ul class="lib__docs" data-docs></ul>
+      <p class="hint lib__note">이 데모는 브라우저 안에서 BM25 검색과 추출형 요약으로 동작합니다. 실서비스에서는 생성 단계에 LLM이 들어가고, UI 계약(스트리밍·인용·거절)은 그대로 유지됩니다.</p>
+    </aside>
+
+    <section class="chat" aria-label="Conversation">
+      <div class="chat__log" data-log aria-live="polite">
+        <div class="empty" data-empty>
+          <p class="mono">Ask the documents</p>
+          <h1>답변마다<br><span>근거</span>가 보입니다.</h1>
+          <div class="sugg" data-sugg></div>
+        </div>
+      </div>
+      <form class="composer" data-form>
+        <label class="sr-only" for="q">질문</label>
+        <textarea id="q" rows="1" placeholder="예) 저온저장고 경보가 울리면 어떻게 해야 하나요?" autocomplete="off"></textarea>
+        <button class="pill is-accent" type="submit" data-send>Send ↵</button>
+      </form>
+    </section>
+
+    <aside class="src" aria-label="Retrieved sources">
+      <div class="src__head mono"><span>Sources</span><span class="dim" data-src-meta>—</span></div>
+      <ol class="src__list" data-sources><li class="src__empty">질문하면 검색된 문단이 점수와 함께 여기에 표시됩니다.</li></ol>
+      <div class="viewer" data-viewer hidden>
+        <div class="viewer__head"><span class="mono" data-viewer-title></span><button class="chip mono" data-viewer-close>✕</button></div>
+        <div class="viewer__body" data-viewer-body></div>
+      </div>
+    </aside>
+  </main>
+
+  <script src="corpus.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

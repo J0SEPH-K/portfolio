@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vision QC — Inspection Console</title>
+  <meta name="description" content="머신비전 검사 결과 콘솔 데모: 결함 오버레이, 신뢰도 임계값 재판정, 실시간 수율.">
+  <meta name="theme-color" content="#08090b">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/demo.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="dbar">
+    <a class="dbar__back mono" href="../../index.html#work">← Portfolio</a>
+    <div class="dbar__title"><b>VISION QC</b><span class="mono">LINE 03 · OLED PANEL · CAM A</span></div>
+    <div class="dbar__chips mono">
+      <span class="chip" data-run><i class="led"></i><span>RUNNING</span></span>
+      <span class="chip hide-sm">UPH <b data-uph>0</b></span>
+      <span class="chip hide-sm">INFER <b data-infer>0</b> ms</span>
+    </div>
+  </header>
+
+  <main class="qc">
+    <section class="qc__view" aria-label="Inspection image">
+      <div class="view__head mono">
+        <span data-panel-id>PANEL —</span>
+        <span class="dim hide-sm">Hover a box · Click to inspect · Space pause · ← → history</span>
+      </div>
+      <div class="view__stage">
+        <canvas class="view__canvas" aria-label="Inspected panel with detected defects"></canvas>
+        <div class="tip mono" role="tooltip" hidden></div>
+      </div>
+    </section>
+
+    <aside class="qc__side" aria-label="Judgement">
+      <div class="verdict" data-verdict>
+        <span class="mono">Verdict</span>
+        <b>—</b>
+        <small class="mono" data-verdict-why></small>
+      </div>
+
+      <div class="card">
+        <label class="mono card__label" for="thr">Confidence threshold <b data-thr-val>0.80</b></label>
+        <input id="thr" type="range" min="0.5" max="0.99" step="0.01" value="0.80">
+        <p class="hint">임계값을 바꾸면 현재 패널과 지난 이력 전체가 즉시 재판정됩니다.</p>
+      </div>
+
+      <div class="card">
+        <p class="mono card__label">Defect classes</p>
+        <div class="classes" data-classes></div>
+      </div>
+
+      <div class="card card--grow">
+        <p class="mono card__label">Detections <span class="dim" data-det-count></span></p>
+        <ol class="dets" data-dets></ol>
+      </div>
+
+      <div class="loupe card">
+        <p class="mono card__label">Loupe <span class="dim" data-loupe-label>— click a box</span></p>
+        <canvas class="loupe__canvas" width="320" height="200"></canvas>
+      </div>
+    </aside>
+
+    <section class="qc__bottom" aria-label="Line statistics">
+      <div class="card stat">
+        <p class="mono card__label">Yield · last <span data-n>0</span></p>
+        <b class="stat__big" data-yield>—</b>
+        <canvas class="spark" data-spark height="60"></canvas>
+      </div>
+      <div class="card stat">
+        <p class="mono card__label">Pareto · NG causes</p>
+        <div class="pareto" data-pareto></div>
+      </div>
+      <div class="card stat stat--strip">
+        <p class="mono card__label">Queue <span class="dim">click to review</span></p>
+        <div class="strip" data-strip></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

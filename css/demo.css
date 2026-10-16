@@ -1,0 +1,48 @@
+/* Shared chrome for the live demos. */
+body { font-size: 14px; }
+.dim { color: var(--fg-3); }
+.dbar {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; align-items: center; gap: 20px;
+  height: 52px; padding: 0 16px;
+  background: rgba(8,9,11,.86); backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.dbar__back { color: var(--fg-2); white-space: nowrap; }
+.dbar__back:hover { color: var(--accent); }
+.dbar__title { display: flex; align-items: baseline; gap: 12px; min-width: 0; }
+.dbar__title b { font-family: var(--f-display); font-weight: 800; font-variation-settings: "wdth" 112; font-size: 17px; letter-spacing: -0.01em; white-space: nowrap; }
+.dbar__title .mono { color: var(--fg-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dbar__chips { margin-left: auto; display: flex; gap: 6px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 26px; padding: 0 10px;
+  border: 1px solid var(--line-2); border-radius: 4px;
+  color: var(--fg-2); white-space: nowrap;
+}
+.chip b { color: var(--fg); font-weight: 500; }
+button.chip:hover { border-color: var(--fg-2); color: var(--fg); }
+.led { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 8px var(--ok); }
+.is-paused .led { background: var(--warn); box-shadow: 0 0 8px var(--warn); }
+
+.card { background: var(--bg-2); border: 1px solid var(--line); padding: 14px; min-width: 0; }
+.card__label { margin: 0 0 10px; color: var(--fg-2); display: flex; justify-content: space-between; gap: 8px; }
+.card__label b { color: var(--accent); font-weight: 500; }
+.hint { margin: 8px 0 0; color: var(--fg-3); font-size: 12px; line-height: 1.5; word-break: keep-all; }
+
+input[type="range"] { width: 100%; accent-color: var(--accent); }
+input[type="text"], input[type="search"], select, textarea {
+  font: inherit; color: var(--fg);
+  background: var(--bg); border: 1px solid var(--line-2); border-radius: 4px;
+  padding: 8px 10px;
+}
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); }
+
+/* embedded as a thumbnail inside the hub */
+.is-embed .dbar__back { display: none; }
+
+@media (max-width: 720px) {
+  .hide-sm { display: none !important; }
+  .dbar { gap: 12px; }
+  .dbar__title .mono { display: none; }
+}

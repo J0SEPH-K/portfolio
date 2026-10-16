@@ -1,0 +1,85 @@
+/* Shared tokens + primitives for the hub and every demo. */
+:root {
+  --bg: #08090b;
+  --bg-2: #0e1013;
+  --bg-3: #15181c;
+  --line: rgba(236, 236, 228, 0.12);
+  --line-2: rgba(236, 236, 228, 0.22);
+  --fg: #ecece4;
+  --fg-2: rgba(236, 236, 228, 0.62);
+  --fg-3: rgba(236, 236, 228, 0.38);
+  --accent: #d4ff3a;
+  --accent-ink: #0b0d02;
+  --warn: #ff6b3d;
+  --ok: #4dffb0;
+  --paper: #ecece4;
+  --paper-ink: #111210;
+
+  --f-display: "Archivo", "IBM Plex Sans KR", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans KR", "Archivo", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+  --gutter: clamp(16px, 2.4vw, 36px);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--f-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+img, svg, canvas, video { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+.mono {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.mono-sq::before {
+  content: "";
+  display: inline-block;
+  width: 7px; height: 7px;
+  margin-right: 10px;
+  background: currentColor;
+  vertical-align: 1px;
+}
+.pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 30px; padding: 0 14px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  transition: background .25s, color .25s, border-color .25s;
+}
+.pill:hover, .pill:focus-visible { background: var(--fg); color: var(--bg); border-color: var(--fg); outline: none; }
+.pill.is-accent { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.pill.is-accent:hover { background: var(--fg); border-color: var(--fg); }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* Lenis */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
