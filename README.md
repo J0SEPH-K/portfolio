@@ -8,3 +8,10 @@ Portfolio hub plus three live frontend demos, built with an agentic (Claude Code
 - `work/grid-100k/`: 100,000-row virtualized data grid (filters, sort, aggregates, chart-as-filter)
 
 Static site, no build step. All data is fictional sample data.
+
+## Credits
+
+The domain-map section re-implements the scroll behaviour of [Turion Space](https://www.turionspace.com)'s mission diagram
+(sticky stage, 10-beat timeline, camera settle, orbiting units, sensor cones, capability panel). It was studied with
+[REA](https://github.com/morluto/rea) static analysis plus source reading and rewritten here with this portfolio's own content.
+The hero/work-list motion takes cues from [Bulletproof](https://www.wearebulletproof.com).

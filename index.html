@@ -96,51 +96,9 @@
       </div>
     </section>
 
-    <!-- DOMAIN MAP (pinned scrollytelling) -->
-    <section class="domain" id="domain" aria-label="Domain map">
-      <div class="domain__pin">
-        <div class="domain__head">
-          <span class="mono mono-sq">002</span>
-          <span class="mono mono-sq">An industrial AI domain map</span>
-          <span class="mono domain__crumb" data-crumb>VISION / INSPECTION</span>
-        </div>
-
-        <svg class="orbit" aria-hidden="true"></svg>
-
-        <div class="domain__panels">
-          <article class="dpanel is-active" data-step="0">
-            <p class="mono dpanel__tag"><span class="mono-sq"></span>Vision / Inspection</p>
-            <h3>검사 결과를<br>1초 안에 판단하게.</h3>
-            <p>2차전지·OLED 검사 라인의 머신비전 결과를 작업자가 즉시 믿고 조치할 수 있도록—결함 오버레이, 신뢰도 임계값 재판정, 실시간 수율 추이를 한 화면에.</p>
-            <a class="pill" href="work/vision-qc/index.html">Demo · Vision QC →</a>
-          </article>
-          <article class="dpanel" data-step="1">
-            <p class="mono dpanel__tag"><span class="mono-sq"></span>RAG / Knowledge</p>
-            <h3>답변의 근거가<br>보이는 챗봇.</h3>
-            <p>사내 문서 기반 RAG 챗봇의 신뢰는 “출처”에서 나옵니다. 스트리밍 응답, 문장별 인용, 원문 하이라이트, 멀티턴 맥락 유지를 구현했습니다.</p>
-            <a class="pill" href="work/rag-desk/index.html">Demo · RAG Desk →</a>
-          </article>
-          <article class="dpanel" data-step="2">
-            <p class="mono dpanel__tag"><span class="mono-sq"></span>Public Platform / Data</p>
-            <h3>수십만 건도<br>끊김 없이.</h3>
-            <p>유통·거래 플랫폼은 데이터가 곧 화면입니다. 가상 스크롤, 즉시 필터·정렬, 집계 차트—그리고 공공 웹 접근성을 고려한 마크업.</p>
-            <a class="pill" href="work/grid-100k/index.html">Demo · Grid 100K →</a>
-          </article>
-          <article class="dpanel" data-step="3">
-            <p class="mono dpanel__tag"><span class="mono-sq"></span>Drone / Field Ops</p>
-            <h3>현장과 관제를<br>하나의 화면에.</h3>
-            <p>시설물 점검 드론의 비행 경로, 텔레메트리, 촬영 결과를 실시간으로 엮는 관제 UI. 다음 데모로 준비 중입니다.</p>
-            <span class="pill" aria-disabled="true">Next build</span>
-          </article>
-        </div>
-
-        <ol class="domain__steps" aria-label="도메인 단계">
-          <li class="is-active"><button type="button" data-step="0"><span>01.</span> Vision / Inspection</button><i></i></li>
-          <li><button type="button" data-step="1"><span>02.</span> RAG / Knowledge</button><i></i></li>
-          <li><button type="button" data-step="2"><span>03.</span> Platform / Data</button><i></i></li>
-          <li><button type="button" data-step="3"><span>04.</span> Drone / Field Ops</button><i></i></li>
-        </ol>
-      </div>
+    <!-- DOMAIN MAP: a tall track with a sticky stage; js/orbit.js renders the scene -->
+    <section class="domain" id="domain" aria-label="산업 AI 도메인 맵">
+      <div class="domain__stage"></div>
     </section>
 
     <!-- WORK LIST -->

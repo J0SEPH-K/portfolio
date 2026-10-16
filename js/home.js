@@ -115,37 +115,64 @@
   Lot($("[data-lot]"));
 
   /* ---------- domain map (orbital) ---------- */
-  const orbit = Orbit($(".orbit"));
-  const CRUMBS = ["VISION / INSPECTION", "RAG / KNOWLEDGE", "PLATFORM / DATA", "DRONE / FIELD OPS"];
-  const panels = $$(".dpanel"), steps = $$(".domain__steps li"), bars = steps.map(li => $("i", li));
-  const crumb = $("[data-crumb]");
-  let current = -1;
-  const setStep = i => {
-    if (i === current) return;
-    current = i;
-    panels.forEach((p, k) => p.classList.toggle("is-active", k === i));
-    steps.forEach((s, k) => s.classList.toggle("is-active", k === i));
-    crumb.textContent = CRUMBS[i];
-  };
-  setStep(0);
-  const domainST = ScrollTrigger.create({
-    trigger: ".domain__pin",
-    start: "top top",
-    end: () => "+=" + innerHeight * 3,
-    pin: true,
-    scrub: true,
-    onUpdate: self => {
-      const p = self.progress, n = 4;
-      setStep(Math.min(n - 1, Math.floor(p * n)));
-      bars.forEach((b, k) => (b.style.width = Math.max(0, Math.min(1, p * n - k)) * 100 + "%"));
-      orbit.setProgress(p);
+  Orbit.mount($(".domain__stage"), $(".domain"), {
+    accent: "#8F4BFF",
+    lavender: "#C9B8FF",
+    cueRho: 0.952,
+    sectionNumber: "002",
+    sectionName: "An industrial AI domain map",
+    scaleNote: "Diagram not to scale",
+    ringLabels: { LEO: "LINE", GEO: "KNOWLEDGE", GY: "ARCHIVE", MOON: "FIELD" },
+    focusStatus: ["Live demo", "Live demo", "Live demo"],
+    labels: {
+      resolved: "DETECTED",
+      gauge: "100,000 ROWS · 5.8 MS",
+      rpo: ["RETRIEVING", "CITED"],
+      structs: {
+        factory: "BUILD", ground: "OPERATOR", depotL: "INDEX", depotG: "INDEX",
+        shipyard: "AGENTS", moon: "DRONE", asteroid: "SITE", refinery: "INSPECTION",
+        ret: "REPORT", otv: "QUERY", sv: "CACHE", rpo: "RETRIEVING", hyper: "MULTIMODAL", fleet: "FLEET",
+      },
     },
+    figureLabels: ["모델이 할 수 있는 것", "현장에서 쓰이는 것"],
+    beats: [
+      { kicker: "Today", headline: "세 개의 라이브 데모로 시작합니다.",
+        lines: ["01 Vision QC", "02 RAG Desk", "03 Grid 100K"],
+        note: "이후의 모든 것은 이 셋에서 자랍니다.", readout: ["Three live demos", "Vision · RAG · Data"] },
+      { kicker: "Why I build", headline: "AI의 가치는 화면에서 결정됩니다.",
+        caption: "오늘날, 모델이 할 수 있는 일에 비해 현장에서 실제로 쓰이는 부분은 작습니다.",
+        figure: true, readout: ["Adoption gap", "Today"] },
+      { kicker: "The potential I see", headline: "좋은 인터페이스는 그 격차를 뒤집습니다.",
+        caption: "검사, 검색, 데이터, 현장 관제가 하나의 시스템처럼 작동할 때.",
+        figure: true, readout: ["Adoption gap", "Potential"] },
+      { kicker: "My goal", headline: "작업자가 AI를 믿고 쓰는 날을 앞당기는 것.",
+        caption: "그러려면 세 가지가 먼저, 이 순서로 참이어야 합니다.",
+        lines: ["01 한눈에 믿을 수 있는 결과", "02 모든 답변에 근거", "03 어떤 규모에서도 빠른 데이터"],
+        readout: ["Full architecture", "Trusted by default"] },
+      { kicker: "A big ambition", headline: "첫 단계는, 먼저 보이게 하는 것.",
+        caption: "보이지 않는 결과는 판단할 수 없습니다. 그래서 검사 화면부터 만들었습니다.",
+        readout: ["First", "Visibility"] },
+      { kicker: "The first step", headline: "검출하고, 설명한다.",
+        caption: "Vision QC는 결함 표시에서 멈추지 않고 신뢰도와 근거를 함께 보여줍니다. 임계값을 바꾸면 이력 전체가 다시 판정됩니다.",
+        link: { href: "work/vision-qc/index.html", label: "Demo · Vision QC →" }, readout: ["Vision QC", "Live demo"] },
+      { kicker: "The next step", headline: "모든 답변에 출처를.",
+        caption: "RAG Desk는 문서에서 근거를 찾아 문장마다 인용하고, 근거가 없으면 답하지 않습니다.",
+        link: { href: "work/rag-desk/index.html", label: "Demo · RAG Desk →" }, readout: ["RAG Desk", "Live demo"] },
+      { kicker: "The next operational need", headline: "보여주는 데이터에서, 움직이는 데이터로.",
+        caption: "Grid 100K는 10만 건을 끊김 없이 필터·정렬·집계합니다. 쿼리 한 번에 수 밀리초.",
+        link: { href: "work/grid-100k/index.html", label: "Demo · Grid 100K →" }, readout: ["Grid 100K", "Filter · Sort · Aggregate"] },
+      { kicker: "In steady state", headline: "여러 화면, 하나의 시스템.",
+        caption: "하나의 디자인 시스템으로 만들고, 하나의 워크플로로 검증하고, 에이전트와 함께 배포합니다.",
+        readout: ["One system", "Design · Verify · Ship"] },
+      { kicker: "What I do", headline: "산업 AI를 위한 프론트엔드.",
+        caption: "지금은 검사, 검색, 데이터. 다음은 드론과 현장 관제입니다.",
+        readout: ["Frontend for industrial AI", "+ Field ops next"] },
+    ],
+    panelTitle: "산업 AI 프론트엔드가 반드시 잘해야 하는 것",
+    panelTitleEnd: "",
+    softwareLabel: "agent workflow",
+    panel: ["Inspection UI", "Grounded answers", "Large-data grids", "Realtime telemetry", "Accessibility", "Agentic delivery"],
   });
-  // step tabs jump to the middle of their scroll range
-  $$(".domain__steps button").forEach(b => b.addEventListener("click", () => {
-    const i = +b.dataset.step;
-    lenis.scrollTo(domainST.start + (domainST.end - domainST.start) * ((i + 0.5) / 4), { duration: 1.4 });
-  }));
 
   /* ---------- work list ---------- */
   const items = $$(".work__list [data-i]");
