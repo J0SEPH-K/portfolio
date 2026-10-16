@@ -9,17 +9,18 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/base.css">
-  <link rel="stylesheet" href="../../css/demo.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../../css/base.css?v=10161834">
+  <link rel="stylesheet" href="../../css/demo.css?v=10161834">
+  <link rel="stylesheet" href="style.css?v=10161834">
 </head>
 <body>
-  <header class="dbar">
-    <a class="dbar__back mono" href="../../index.html#work">← Portfolio</a>
-    <div class="dbar__title"><b>GRID 100K</b><span class="mono">Wholesale market transactions · sample data</span></div>
-    <div class="dbar__chips mono">
-      <span class="chip">QUERY <b data-ms>0</b> ms</span>
-      <span class="chip hide-sm">DOM ROWS <b data-dom>0</b></span>
+  <header class="bar">
+    <a class="bar__back mono" href="../../index.html#work">← Portfolio</a>
+    <p class="bar__title"><b>Grid 100K</b><span class="mono">Wholesale market transactions · sample data</span></p>
+    <div class="bar__stats mono">
+      <span class="hide-sm">Query <b data-ms>0</b> ms</span>
+      <span class="hide-sm">DOM rows <b data-dom>0</b></span>
+      <button type="button" class="export" data-export>Export CSV</button>
     </div>
   </header>
 
@@ -39,8 +40,12 @@
       <div class="kpi"><span class="mono">Avg price</span><b data-k="avg">—</b><small class="mono">원/kg · weighted</small></div>
       <div class="kpi"><span class="mono">Amount</span><b data-k="amt">—</b><small class="mono">억원</small></div>
       <div class="kpi kpi--chart">
-        <span class="mono">Daily amount · last 60 days <span class="dim" data-day-label>— click a bar to filter</span></span>
+        <span class="mono">Daily amount · last 60 days <span class="dim" data-day-label>— drag to select days</span></span>
         <canvas data-chart height="70"></canvas>
+      </div>
+      <div class="kpi kpi--top">
+        <span class="mono">Top items · amount</span>
+        <ol class="top" data-top></ol>
       </div>
     </section>
 
@@ -58,6 +63,6 @@
     </aside>
   </main>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=10161834"></script>
 </body>
 </html>

@@ -152,9 +152,9 @@
   const preview = $(".work__preview");
   const metaTag = $("[data-meta-tag]"), metaStack = $("[data-meta-stack]");
   const META = [
-    ["LIVE DEMO", "Canvas 2D · Vanilla JS"],
-    ["LIVE DEMO", "Streaming UI · Client RAG"],
-    ["LIVE DEMO", "Virtual scroll · 100,000 rows"],
+    ["LIVE DEMO", "Real CV detector · Web Worker"],
+    ["LIVE DEMO", "BM25 RAG · add your own docs"],
+    ["LIVE DEMO", "100k rows · brush · CSV export"],
     ["LIVE APP", "Next.js · React Query · real trend data"],
   ];
   let active = -1, hovering = false;

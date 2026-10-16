@@ -3,59 +3,60 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RAG Desk — Grounded Answers</title>
-  <meta name="description" content="문서 기반 RAG 챗봇 UI 데모: 스트리밍 답변, 문장별 인용, 원문 하이라이트, 근거 없을 때 거절.">
+  <title>RAG Desk</title>
+  <meta name="description" content="문서 기반 질의응답 데모: 브라우저에서 문서를 색인하고(BM25), 근거 문장을 인용해 답하며, 근거가 없으면 답하지 않습니다. 직접 문서를 추가할 수 있습니다.">
   <meta name="theme-color" content="#08090b">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/base.css">
-  <link rel="stylesheet" href="../../css/demo.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../../css/base.css?v=10161834">
+  <link rel="stylesheet" href="style.css?v=10161834">
 </head>
 <body>
-  <header class="dbar">
-    <a class="dbar__back mono" href="../../index.html#work">← Portfolio</a>
-    <div class="dbar__title"><b>RAG DESK</b><span class="mono">Grounded answers over internal docs</span></div>
-    <div class="dbar__chips mono">
-      <span class="chip hide-sm">INDEX <b data-index-size>0</b> chunks</span>
-      <button class="chip" data-new>+ New chat</button>
-    </div>
+  <header class="bar">
+    <a class="bar__back mono" href="../../index.html#work">← Portfolio</a>
+    <p class="bar__title"><b>RAG Desk</b><span class="mono">BM25 · rerank · cite or refuse</span></p>
+    <p class="bar__stats mono hide-sm"><span><b data-docs>0</b> docs</span><span><b data-chunks>0</b> chunks</span></p>
   </header>
 
   <main class="rag">
-    <aside class="lib" aria-label="Document library">
-      <p class="mono lib__label">Library <span class="dim">· 가상 샘플 문서</span></p>
-      <ul class="lib__docs" data-docs></ul>
-      <p class="hint lib__note">이 데모는 브라우저 안에서 BM25 검색과 추출형 요약으로 동작합니다. 실서비스에서는 생성 단계에 LLM이 들어가고, UI 계약(스트리밍·인용·거절)은 그대로 유지됩니다.</p>
+    <aside class="lib" aria-label="문서 라이브러리">
+      <p class="label mono">Library</p>
+      <ul class="lib__docs" data-docs-list></ul>
+      <label class="add" data-add tabindex="0">
+        <input type="file" accept=".txt,.md,text/plain,text/markdown" multiple hidden data-file>
+        <span class="add__plus" aria-hidden="true">+</span>
+        <span><b>Add a document</b><small>Drop .txt / .md, or click. Paste works too.</small></span>
+      </label>
     </aside>
 
-    <section class="chat" aria-label="Conversation">
+    <section class="chat" aria-label="대화">
       <div class="chat__log" data-log aria-live="polite">
-        <div class="empty" data-empty>
+        <div class="hello" data-hello>
           <p class="mono">Ask the documents</p>
-          <h1>답변마다<br><span>근거</span>가 보입니다.</h1>
+          <h1>답은 문서에서,<br><span>근거</span>와 함께.</h1>
           <div class="sugg" data-sugg></div>
         </div>
       </div>
       <form class="composer" data-form>
         <label class="sr-only" for="q">질문</label>
-        <textarea id="q" rows="1" placeholder="예) 저온저장고 경보가 울리면 어떻게 해야 하나요?" autocomplete="off"></textarea>
-        <button class="pill is-accent" type="submit" data-send>Send ↵</button>
+        <textarea id="q" rows="1" placeholder="질문을 입력하세요 · Enter로 전송" autocomplete="off"></textarea>
+        <button type="submit" class="send" data-send aria-label="전송">↵</button>
       </form>
     </section>
 
-    <aside class="src" aria-label="Retrieved sources">
-      <div class="src__head mono"><span>Sources</span><span class="dim" data-src-meta>—</span></div>
-      <ol class="src__list" data-sources><li class="src__empty">질문하면 검색된 문단이 점수와 함께 여기에 표시됩니다.</li></ol>
-      <div class="viewer" data-viewer hidden>
-        <div class="viewer__head"><span class="mono" data-viewer-title></span><button class="chip mono" data-viewer-close>✕</button></div>
-        <div class="viewer__body" data-viewer-body></div>
+    <aside class="ev" aria-label="근거">
+      <div class="ev__head mono"><span>Evidence</span><span data-ev-meta>—</span></div>
+      <ol class="ev__list" data-ev><li class="ev__empty">질문하면 검색된 문단이 점수와 함께 여기에 나타납니다. 질문과 일치한 단어가 강조됩니다.</li></ol>
+      <div class="reader" data-reader hidden>
+        <div class="reader__head"><span class="mono" data-reader-title></span><button class="x mono" data-reader-close aria-label="닫기">✕</button></div>
+        <div class="reader__body" data-reader-body></div>
       </div>
     </aside>
   </main>
 
-  <script src="corpus.js"></script>
-  <script src="app.js"></script>
+  <div class="toast mono" data-toast hidden></div>
+  <script src="corpus.js?v=10161834"></script>
+  <script src="app.js?v=10161834"></script>
 </body>
 </html>

@@ -83,3 +83,11 @@ html.lenis, html.lenis body { height: auto; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+/* demo headers on phones: back link becomes an arrow, secondary stats hide */
+@media (max-width: 720px) {
+  .bar { gap: 12px !important; }
+  .bar__back { font-size: 0 !important; }
+  .bar__back::before { content: "←"; font-size: 18px; }
+  .bar .hide-sm { display: none !important; }
+}

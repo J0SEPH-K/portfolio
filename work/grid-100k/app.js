@@ -59,13 +59,20 @@
 
   /* ---------- columns ---------- */
   const fmt = n => n.toLocaleString("ko-KR");
+  // highlight the search term inside a cell
+  const hl = v => {
+    const q = state.q.trim();
+    if (!q) return v;
+    const i = String(v).toLowerCase().indexOf(q.toLowerCase());
+    return i < 0 ? v : `${String(v).slice(0, i)}<mark>${String(v).slice(i, i + q.length)}</mark>${String(v).slice(i + q.length)}`;
+  };
   const COLS = [
-    { key: "id", label: "거래번호", cls: "id" },
+    { key: "id", label: "거래번호", cls: "id", render: r => hl(r.id) },
     { key: "day", label: "일자", render: r => DATE_LABELS[r.day] },
-    { key: "market", label: "시장" },
-    { key: "item", label: "품목" },
+    { key: "market", label: "시장", render: r => hl(r.market) },
+    { key: "item", label: "품목", render: r => hl(r.item) },
     { key: "grade", label: "등급", render: r => `<span class="gr gr--${r.grade}">${r.grade}</span>`, sort: r => GRADES.indexOf(r.grade) },
-    { key: "origin", label: "산지" },
+    { key: "origin", label: "산지", render: r => hl(r.origin) },
     { key: "qty", label: "물량 kg", num: true, render: r => fmt(r.qty) },
     { key: "price", label: "단가", num: true, render: r => {
       const d = r.price / (itemAvg[r.item] * GRADE_MUL[r.grade]) - 1;
@@ -76,7 +83,7 @@
   ];
 
   /* ---------- state ---------- */
-  const state = { q: "", market: "", item: "", status: "", grades: new Set(GRADES), day: -1, sortKey: "day", sortDir: -1 };
+  const state = { q: "", market: "", item: "", status: "", grades: new Set(GRADES), range: null, sortKey: "day", sortDir: -1 };
   let view = new Int32Array(0);
   let active = -1;
 
@@ -102,9 +109,10 @@
   form.addEventListener("submit", e => e.preventDefault());
   $("[data-reset]").addEventListener("click", () => {
     form.reset();
-    Object.assign(state, { q: "", market: "", item: "", status: "", day: -1, grades: new Set(GRADES) });
+    Object.assign(state, { q: "", market: "", item: "", status: "", range: null, grades: new Set(GRADES) });
     gradesEl.querySelectorAll(".g").forEach(b => b.setAttribute("aria-pressed", "true"));
     update();
+    $("[data-day-label]").textContent = "— drag to select days";
   });
 
   /* ---------- header ---------- */
@@ -126,7 +134,7 @@
 
   /* ---------- query ---------- */
   function query() {
-    const { q, market, item, status, grades, day } = state;
+    const { q, market, item, status, grades, range } = state;
     const ql = q.toLowerCase();
     const out = [];
     for (let i = 0; i < N; i++) {
@@ -135,7 +143,7 @@
       if (item && r.item !== item) continue;
       if (status && r.status !== status) continue;
       if (!grades.has(r.grade)) continue;
-      if (day >= 0 && r.day !== day) continue;
+      if (range && (r.day < range[0] || r.day > range[1])) continue;
       if (ql && !(r.item.includes(ql) || r.origin.includes(ql) || r.id.toLowerCase().includes(ql) || r.market.includes(ql))) continue;
       out.push(i);
     }
@@ -193,10 +201,11 @@
   let daily = new Float64Array(60);
   function aggregate() {
     let q = 0, a = 0;
+    const byItem = {};
     daily = new Float64Array(60);
     for (let k = 0; k < view.length; k++) {
       const r = rows[view[k]];
-      if (r.amount) { q += r.qty; a += r.amount; }
+      if (r.amount) { q += r.qty; a += r.amount; byItem[r.item] = (byItem[r.item] || 0) + r.amount; }
       const d = r.day - (DAYS - 60);
       if (d >= 0) daily[d] += r.amount;
     }
@@ -205,10 +214,13 @@
     $('[data-k="vol"]').textContent = fmt(Math.round(q / 1000));
     $('[data-k="avg"]').textContent = q ? fmt(Math.round(a / q)) : "—";
     $('[data-k="amt"]').textContent = (a / 1e8).toFixed(1);
+    renderTop(byItem);
   }
 
   const chart = $("[data-chart]");
-  let hoverBar = -1;
+  const label = $("[data-day-label]");
+  let hoverBar = -1, brush = null;            // brush: [startBar, endBar] while dragging
+  const OFF = DAYS - 60;
   function drawChart() {
     const dpr = Math.min(devicePixelRatio || 1, 2);
     const w = chart.clientWidth, h = 70;
@@ -216,32 +228,69 @@
     chart.width = w * dpr; chart.height = h * dpr;
     const g = chart.getContext("2d");
     g.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const max = Math.max(1, ...daily);
-    const bw = w / 60;
+    const max = Math.max(1, ...daily), bw = w / 60;
+    const sel = brush ? [Math.min(...brush), Math.max(...brush)] : state.range ? [state.range[0] - OFF, state.range[1] - OFF] : null;
+    if (sel) { g.fillStyle = "rgba(212,255,58,.08)"; g.fillRect(sel[0] * bw, 0, (sel[1] - sel[0] + 1) * bw, h); }
     for (let i = 0; i < 60; i++) {
       const bh = (daily[i] / max) * (h - 4);
-      const sel = state.day === DAYS - 60 + i;
-      g.fillStyle = sel ? "#d4ff3a" : i === hoverBar ? "rgba(236,236,228,.8)" : state.day >= 0 ? "rgba(236,236,228,.18)" : "rgba(212,255,58,.55)";
+      const inSel = sel && i >= sel[0] && i <= sel[1];
+      g.fillStyle = inSel ? "#d4ff3a" : i === hoverBar ? "rgba(236,236,228,.8)" : sel ? "rgba(236,236,228,.18)" : "rgba(212,255,58,.55)";
       g.fillRect(i * bw + 1, h - bh, Math.max(1, bw - 2), bh);
     }
   }
-  const barAt = e => Math.floor(((e.clientX - chart.getBoundingClientRect().left) / chart.clientWidth) * 60);
+  const barAt = e => Math.max(0, Math.min(59, Math.floor(((e.clientX - chart.getBoundingClientRect().left) / chart.clientWidth) * 60)));
+  const rangeText = () => state.range
+    ? `${DATE_LABELS[state.range[0]]}${state.range[1] !== state.range[0] ? " → " + DATE_LABELS[state.range[1]] : ""} · double-click to clear`
+    : "— drag to select days";
+  chart.addEventListener("pointerdown", e => { chart.setPointerCapture(e.pointerId); brush = [barAt(e), barAt(e)]; drawChart(); });
   chart.addEventListener("pointermove", e => {
     hoverBar = barAt(e);
-    const d = DAYS - 60 + hoverBar;
-    $("[data-day-label]").textContent = `${DATE_LABELS[d]} · ${(daily[hoverBar] / 1e8).toFixed(2)}억원`;
+    if (brush) {
+      brush[1] = hoverBar;
+      const a = Math.min(...brush), b = Math.max(...brush);
+      label.textContent = `${DATE_LABELS[OFF + a]} → ${DATE_LABELS[OFF + b]} · ${b - a + 1} days`;
+    } else label.textContent = `${DATE_LABELS[OFF + hoverBar]} · ${(daily[hoverBar] / 1e8).toFixed(2)}억원`;
     drawChart();
   });
-  chart.addEventListener("pointerleave", () => {
-    hoverBar = -1;
-    $("[data-day-label]").textContent = state.day >= 0 ? `filtered: ${DATE_LABELS[state.day]} (click again to clear)` : "— click a bar to filter";
-    drawChart();
-  });
-  chart.addEventListener("click", e => {
-    const d = DAYS - 60 + barAt(e);
-    state.day = state.day === d ? -1 : d;
+  chart.addEventListener("pointerup", () => {
+    if (!brush) return;
+    const a = Math.min(...brush) + OFF, b = Math.max(...brush) + OFF;
+    const same = state.range && state.range[0] === a && state.range[1] === b;
+    state.range = same ? null : [a, b];
+    brush = null;
     update();
-    $("[data-day-label]").textContent = state.day >= 0 ? `filtered: ${DATE_LABELS[state.day]} (click again to clear)` : "— click a bar to filter";
+    label.textContent = rangeText();
+  });
+  chart.addEventListener("dblclick", () => { state.range = null; update(); label.textContent = rangeText(); });
+  chart.addEventListener("pointerleave", () => { hoverBar = -1; if (!brush) label.textContent = rangeText(); drawChart(); });
+
+  /* ---------- top items for the current filter ---------- */
+  function renderTop(byItem) {
+    const rows = Object.entries(byItem).sort((a, b) => b[1] - a[1]).slice(0, 5), max = rows[0]?.[1] || 1;
+    const ol = $("[data-top]");
+    ol.innerHTML = rows.map(([k, v]) => `<li data-item="${k}"><span>${k}</span><i style="transform:scaleX(${(v / max).toFixed(3)})"></i><b>${(v / 1e8).toFixed(1)}억</b></li>`).join("");
+    ol.querySelectorAll("li").forEach(li => (li.onclick = () => {
+      const v = li.dataset.item;
+      state.item = state.item === v ? "" : v;
+      $("[data-filters]").item.value = state.item;
+      update();
+    }));
+  }
+
+  /* ---------- CSV export of exactly what's filtered ---------- */
+  $("[data-export]").addEventListener("click", () => {
+    const head = ["id", "date", "market", "item", "grade", "origin", "qty_kg", "price_krw_per_kg", "amount_krw", "status"];
+    const lines = [head.join(",")];
+    for (let k = 0; k < view.length; k++) {
+      const r = rows[view[k]];
+      lines.push([r.id, DATE_LABELS[r.day], r.market, r.item, r.grade, `"${r.origin}"`, r.qty, r.price, r.amount, r.status].join(","));
+    }
+    const blob = new Blob(["\ufeff" + lines.join("\n")], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `grid-100k_${view.length}rows.csv`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
   });
 
   /* ---------- selection + detail ---------- */
