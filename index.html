@@ -72,25 +72,47 @@
         한눈에 믿게 해야 합니다.
       </h2>
       <div class="lot" data-lot>
-        <div class="lot__head">
-          <div class="lot__meta">
-            <p class="mono">Lot 24-1016 · 1,000 units · Model accuracy <b>99.0%</b></p>
-            <p class="lot__q" data-lot-q>1,000개 중 10개는 오판입니다. 어느 것인지 찾을 수 있나요?</p>
-          </div>
-          <div class="lot__modes" role="group" aria-label="표시 방식">
-            <button type="button" class="seg is-on" data-mode="plain" aria-pressed="true">판정만</button>
-            <button type="button" class="seg" data-mode="explain" aria-pressed="false">판정 + 근거</button>
-          </div>
-        </div>
-        <div class="lot__body">
-          <canvas class="lot__grid" aria-label="1,000개 검사 유닛 격자. 마우스를 올리면 판정 근거가 보입니다."></canvas>
-          <aside class="lot__side">
-            <div class="lot__stat"><span class="mono">Review queue</span><b data-lot-review>—</b></div>
-            <div class="lot__stat"><span class="mono">Misjudgements caught</span><b data-lot-caught>—</b></div>
-            <div class="lot__card" data-lot-card>
-              <p class="mono">Hover a unit</p>
-              <p class="lot__hint">각 칸은 검사된 유닛 하나입니다. 근거를 켜면 신뢰도가 낮은 유닛이 드러납니다.</p>
+        <p class="lot__meta mono">Lot 24-1016 · 1,000 units · Model accuracy <b>99.0%</b></p>
+        <p class="lot__q" data-lot-q aria-live="polite">이 격자의 1,000개 유닛 중 10개는 AI가 틀리게 판정했습니다. 어느 것인지 찾을 수 있나요?</p>
+        <div class="lot__main">
+          <div class="lot__board">
+            <canvas class="lot__grid" aria-label="1,000개 검사 유닛 격자. 마우스를 올리면 판정 근거가 보입니다."></canvas>
+            <div class="lot__legend mono" aria-hidden="true">
+              <span><i class="lg-pass"></i>Pass</span>
+              <span><i class="lg-ng"></i>NG</span>
+              <span class="lg-ev"><i class="lg-review"></i>Review queue</span>
+              <span class="lg-ev"><i class="lg-wrong"></i>Misjudged</span>
             </div>
+          </div>
+          <aside class="lot__panel">
+            <ol class="lot__steps">
+              <li class="lot__step" data-step="1">
+                <span class="lot__num">1</span>
+                <div><b>격자를 훑어보세요</b><small>판정만으로는 오판이 보이지 않습니다.</small></div>
+              </li>
+              <li class="lot__step" data-step="2">
+                <span class="lot__num">2</span>
+                <div><b>근거를 켜보세요</b>
+                  <button type="button" class="lot__switch" role="switch" aria-checked="false" data-evidence>
+                    <span class="lot__knob"></span><span class="lot__switchlabel">판정 + 근거 보기</span>
+                  </button>
+                </div>
+              </li>
+              <li class="lot__step" data-step="3">
+                <span class="lot__num">3</span>
+                <div><b>검토 기준을 조절해보세요</b>
+                  <label class="lot__thr" for="lot-thr"><span class="mono">Confidence threshold</span><output class="mono" data-thr-out>0.80</output></label>
+                  <input id="lot-thr" type="range" min="0.6" max="0.97" step="0.01" value="0.80" disabled>
+                  <canvas class="lot__hist" aria-hidden="true"></canvas>
+                </div>
+              </li>
+            </ol>
+            <dl class="lot__stats">
+              <div><dt class="mono">Review queue</dt><dd data-stat="queue">0</dd></div>
+              <div><dt class="mono">Caught</dt><dd data-stat="caught">0<small>/10</small></dd></div>
+              <div><dt class="mono">Workload</dt><dd data-stat="load">0%</dd></div>
+            </dl>
+            <div class="lot__card" data-lot-card></div>
           </aside>
         </div>
       </div>

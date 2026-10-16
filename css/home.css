@@ -110,26 +110,84 @@
 }
 .statement__title .acc { color: #6b7d00; }
 .statement__title .ch { opacity: .14; }
-.lot { margin-top: clamp(56px, 7vw, 96px); padding-top: 24px; border-top: 1px solid rgba(17,18,16,.16); }
-.lot__head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 20px; }
-.lot__meta .mono { margin: 0 0 8px; color: rgba(17,18,16,.55); font-size: 12px; }
-.lot__meta .mono b { color: var(--paper-ink); font-weight: 500; }
-.lot__q { margin: 0; font-size: clamp(18px, 1.7vw, 24px); font-weight: 500; letter-spacing: -0.02em; word-break: keep-all; max-width: 640px; }
-.lot__modes { display: inline-flex; padding: 3px; border: 1px solid rgba(17,18,16,.2); border-radius: 999px; }
-.seg { height: 34px; padding: 0 16px; border-radius: 999px; font-size: 14px; color: rgba(17,18,16,.6); transition: background .25s, color .25s; }
-.seg.is-on { background: var(--paper-ink); color: var(--paper); }
-.lot__body { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: clamp(20px, 3vw, 40px); align-items: start; }
-.lot__grid { width: 100%; cursor: crosshair; touch-action: manipulation; }
-.lot__side { display: grid; gap: 12px; }
-.lot__stat { display: grid; gap: 2px; padding-bottom: 12px; border-bottom: 1px solid rgba(17,18,16,.14); }
-.lot__stat .mono { color: rgba(17,18,16,.5); font-size: 12px; }
-.lot__stat b { font-family: var(--f-display); font-weight: 800; font-variation-settings: "wdth" 108; font-size: 34px; line-height: 1.05; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
-.lot__card { min-height: 150px; padding: 14px; background: #fff; border: 1px solid rgba(17,18,16,.12); }
-.lot__card .mono { margin: 0 0 6px; color: rgba(17,18,16,.5); font-size: 12px; }
-.lot__verdict { margin: 0 0 6px; font-family: var(--f-display); font-weight: 800; font-size: 26px; letter-spacing: -0.02em; }
-.lot__verdict span { font-family: var(--f-mono); font-weight: 400; font-size: 12px; color: rgba(17,18,16,.55); letter-spacing: 0; margin-left: 6px; }
-.lot__hint { margin: 0; font-size: 14px; color: rgba(17,18,16,.7); word-break: keep-all; line-height: 1.55; }
-.lot__hint b { color: #e2531f; font-weight: 600; }
+.lot { margin-top: clamp(48px, 6vw, 80px); padding-top: 22px; border-top: 1px solid rgba(17,18,16,.16); }
+.lot__meta { margin: 0 0 8px; color: rgba(17,18,16,.55); font-size: 12px; }
+.lot__meta b { color: var(--paper-ink); font-weight: 500; }
+.lot__q { margin: 0 0 22px; font-size: clamp(18px, 1.6vw, 22px); font-weight: 500; letter-spacing: -0.02em; line-height: 1.45; word-break: keep-all; text-wrap: pretty; min-height: 2.9em; }
+.lot__main {
+  display: grid; grid-template-columns: minmax(0, 1fr) clamp(280px, 26vw, 340px); gap: clamp(20px, 2.6vw, 36px);
+  align-items: start;
+  padding: clamp(14px, 1.6vw, 22px);
+  background: #f6f6f0; border: 1px solid rgba(17,18,16,.12); border-radius: 14px;
+}
+.lot__board { min-width: 0; display: grid; gap: 12px; }
+.lot__grid { width: 100%; display: block; cursor: crosshair; touch-action: manipulation; }
+.lot__legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 11px; color: rgba(17,18,16,.6); padding-left: 8px; }
+.lot__legend span { display: inline-flex; align-items: center; gap: 7px; transition: opacity .4s; }
+.lot__legend i { width: 10px; height: 10px; border-radius: 3px; }
+.lg-pass { background: rgba(17,18,16,.14); }
+.lg-ng { background: rgba(17,18,16,.62); }
+.lg-review { background: #6b7d00; }
+.lg-wrong { border: 1.5px solid #e2531f; }
+.lot__legend .lg-ev { opacity: .35; }
+.lot.is-evidence .lot__legend .lg-ev { opacity: 1; }
+
+.lot__panel { display: grid; gap: 14px; min-width: 0; }
+.lot__steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.lot__step {
+  display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px; align-items: start;
+  padding: 12px; border-radius: 10px; border: 1px solid transparent;
+  transition: background .35s, border-color .35s, opacity .35s;
+  opacity: .62;
+}
+.lot__step b { display: block; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+.lot__step small { display: block; margin-top: 2px; font-size: 13px; color: rgba(17,18,16,.6); word-break: keep-all; }
+.lot__num {
+  display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%;
+  font-family: var(--f-mono); font-size: 12px; border: 1px solid rgba(17,18,16,.3);
+  transition: background .35s, color .35s, border-color .35s;
+}
+.lot__step.is-done { opacity: .85; }
+.lot__step.is-done .lot__num { background: var(--paper-ink); color: var(--paper); border-color: var(--paper-ink); font-size: 0; }
+.lot__step.is-done .lot__num::after { content: "✓"; font-size: 12px; }
+.lot__step.is-next { opacity: 1; background: #fff; border-color: rgba(17,18,16,.14); box-shadow: 0 6px 24px -12px rgba(17,18,16,.35); }
+.lot__step.is-next .lot__num { background: #6b7d00; color: #fff; border-color: #6b7d00; }
+
+.lot__switch {
+  margin-top: 10px; display: inline-flex; align-items: center; gap: 10px;
+  height: 40px; padding: 0 16px 0 6px; border-radius: 999px;
+  background: var(--paper-ink); color: var(--paper); font-size: 14px; font-weight: 500;
+  transition: background .3s, transform .2s;
+}
+.lot__switch:hover { transform: translateY(-1px); }
+.lot__switch:active { transform: none; }
+.lot__knob { position: relative; width: 44px; height: 28px; border-radius: 999px; background: rgba(236,236,228,.25); transition: background .3s; }
+.lot__knob::after { content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #ecece4; transition: transform .35s var(--ease-out); }
+.lot__switch[aria-checked="true"] { background: #6b7d00; }
+.lot__switch[aria-checked="true"] .lot__knob { background: rgba(255,255,255,.3); }
+.lot__switch[aria-checked="true"] .lot__knob::after { transform: translateX(16px); }
+.lot__step.is-next .lot__switch { animation: lot-pulse 1.8s ease-in-out infinite; }
+@keyframes lot-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(107,125,0,.45); } 50% { box-shadow: 0 0 0 7px rgba(107,125,0,0); } }
+
+.lot__thr { margin-top: 10px; display: flex; justify-content: space-between; align-items: baseline; font-size: 11px; color: rgba(17,18,16,.55); }
+.lot__thr output { font-size: 14px; color: var(--paper-ink); }
+.lot__step input[type="range"] { width: 100%; margin: 6px 0 2px; accent-color: #6b7d00; }
+.lot__step input[type="range"]:disabled { opacity: .35; }
+.lot__hist { width: 100%; display: block; cursor: ew-resize; touch-action: none; }
+
+.lot__stats { margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.lot__stats div { padding: 10px; background: #fff; border-radius: 10px; border: 1px solid rgba(17,18,16,.1); min-width: 0; }
+.lot__stats dt { font-size: 10px; color: rgba(17,18,16,.5); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lot__stats dd { margin: 2px 0 0; font-family: var(--f-display); font-weight: 800; font-variation-settings: "wdth" 105; font-size: 26px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.lot__stats small { font-size: 13px; color: rgba(17,18,16,.45); font-weight: 600; }
+.lot__card { min-height: 112px; padding: 12px 14px; background: #fff; border-radius: 10px; border: 1px solid rgba(17,18,16,.1); font-size: 14px; line-height: 1.55; word-break: keep-all; }
+.lot__card p { margin: 0; color: rgba(17,18,16,.72); }
+.lot__card .mono { margin-bottom: 6px; color: rgba(17,18,16,.5); font-size: 11px; }
+.lot__card b { color: #e2531f; font-weight: 600; }
+.lot__verdict { display: flex; align-items: center; gap: 10px; margin-bottom: 6px !important; font-family: var(--f-display); font-weight: 800; font-size: 24px; color: var(--paper-ink) !important; }
+.lot__conf { flex: 1; height: 6px; background: rgba(17,18,16,.1); border-radius: 3px; overflow: hidden; }
+.lot__conf i { display: block; height: 100%; background: #6b7d00; }
+.lot__verdict em { font-style: normal; font-size: 12px; font-weight: 400; color: rgba(17,18,16,.6); }
 
 /* ---------- Domain map (orbital, js/orbit.js) ---------- */
 /* 11 screens of track, one sticky screen of stage: progress spans 10 screens of scroll */
@@ -415,7 +473,13 @@
   .hl--3 { padding-left: 0; }
   .hl--4 { padding-left: 40%; }
   .hero__scroll { display: none; }
-  .lot__body { grid-template-columns: 1fr; }
+  .lot__main { grid-template-columns: 1fr; padding: 12px; gap: 14px; }
+  .lot__q { min-height: 0; font-size: 17px; }
+  .lot__step { padding: 8px 10px; }
+  .lot__step small { display: none; }
+  .lot__switch { margin-top: 6px; }
+  .lot__stats dt { white-space: normal; font-size: 9px; line-height: 1.3; }
+  .lot__stats dd { font-size: 22px; }
   .lot__card { min-height: 0; }
 
 
