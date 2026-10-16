@@ -89,30 +89,8 @@
     gsap.to(sel, { xPercent: x, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } })
   );
 
-  /* ---------- statement: per-character scrub ---------- */
-  const title = $("[data-reveal]");
-  const wrapChars = node => {
-    [...node.childNodes].forEach(n => {
-      if (n.nodeType === 3) {
-        const frag = document.createDocumentFragment();
-        [...n.textContent].forEach(c => {
-          const s = document.createElement("span");
-          s.className = "ch"; s.textContent = c;
-          frag.appendChild(s);
-        });
-        n.replaceWith(frag);
-      } else if (n.nodeType === 1 && n.tagName !== "BR") wrapChars(n);
-    });
-  };
-  title.setAttribute("aria-label", title.textContent.replace(/\s+/g, " ").trim());
-  wrapChars(title);
-  gsap.to($$(".ch", title), {
-    opacity: 1, stagger: 0.02, ease: "none",
-    scrollTrigger: { trigger: title, start: "top 80%", end: "bottom 45%", scrub: true },
-  });
-
-  /* ---------- statement: lot inspector ---------- */
-  Lot($("[data-lot]"));
+  /* ---------- statement: three-state lot scanner ---------- */
+  Statement($(".statement"));
 
   /* ---------- domain map (orbital) ---------- */
   Orbit.mount($(".domain__stage"), $(".domain"), {
