@@ -38,7 +38,7 @@ window.Statement = function Statement(section) {
   const caught = units.filter(u => u.wrong && u.conf < THR).length;
 
   /* ---------- layout ---------- */
-  let W = 0, H = 0, dpr = 1, cols = 50, rows = 20, cx = 12, cy = 12, sp = 12, ox = 0, oy = 0;
+  let W = 0, H = 0, dpr = 1, cols = 50, rows = 20, cx = 12, cy = 12, sp = 12, dot = 6, ox = 0, oy = 0;
   function layout() {
     dpr = Math.min(devicePixelRatio || 1, 2);
     W = stage.clientWidth; H = stage.clientHeight;
@@ -46,15 +46,20 @@ window.Statement = function Statement(section) {
     const gw = slots[0].clientWidth;
     cols = gw > 760 ? 50 : 40; rows = 1000 / cols;
     const maxH = Math.max(200, H * (gw > 760 ? 0.44 : 0.36));
-    cx = (gw - 16) / cols;
-    cy = Math.min(cx, (maxH - 16) / rows);
-    sp = Math.min(cx, cy);
-    const sh = Math.ceil(rows * cy + 16) + "px";
+    // edge-to-edge lattice: the first dot's left edge and the last dot's right edge
+    // sit exactly on the text column, so the grid aligns with the copy around it
+    const DOT = 0.52;
+    const pw = gw / (cols - 1 + DOT), ph = maxH / (rows - 1 + DOT);
+    sp = Math.min(pw, ph);
+    dot = DOT * sp;
+    cx = (gw - dot) / (cols - 1);
+    cy = sp;
+    const sh = Math.ceil(dot + (rows - 1) * cy) + "px";
     slots.forEach(s => (s.style.height = sh));
     const sr = slots[0].getBoundingClientRect(), st = stage.getBoundingClientRect();
-    ox = sr.left - st.left + 8; oy = sr.top - st.top + 8;
+    ox = sr.left - st.left + dot / 2; oy = sr.top - st.top + dot / 2;   // centre of the first dot
   }
-  const center = u => [ox + (u.i % cols + 0.5) * cx, oy + (Math.floor(u.i / cols) + 0.5) * cy];
+  const center = u => [ox + (u.i % cols) * cx, oy + Math.floor(u.i / cols) * cy];
 
   /* ---------- pointer + clicks ---------- */
   const ptr = { x: -1e4, y: -1e4, tx: -1e4, ty: -1e4, on: 0, inside: false };
@@ -155,14 +160,15 @@ window.Statement = function Statement(section) {
     // dark side + its "+" field
     if (X > 0) {
       g.fillStyle = DARK_BG; g.fillRect(0, 0, X, H);
-      const step = 36, ox0 = (W % step) / 2, oy0 = (H % step) / 2;
+      const x0 = ox + cx / 2 - Math.ceil((ox + cx / 2) / cx) * cx;
+      const y0 = oy + cy / 2 - Math.ceil((oy + cy / 2) / cy) * cy;
       g.lineWidth = 1;
-      for (let x = ox0; x < X; x += step) {
-        for (let y = oy0; y < H; y += step) {
+      for (let x = x0; x < X; x += cx) {
+        for (let y = y0; y < H; y += cy) {
           const [dx, dy, rg] = rippleAt(x, y);
           const pd = Math.hypot(x - ptr.x, y - ptr.y), pf = smooth(clamp(1 - pd / 160, 0, 1)) * ptr.on;
           const glow = Math.max(rg, pf * 0.6);
-          const arm = 3 + glow * 3, px = x + dx, py = y + dy;
+          const arm = Math.min(3, (Math.min(cx, cy) - dot) / 2 - 0.5) + glow * 2, px = x + dx, py = y + dy;
           g.strokeStyle = glow > 0.05 ? `rgba(${LIME},${(0.08 + glow * 0.7).toFixed(3)})` : `rgba(${PAPER},0.08)`;
           g.beginPath(); g.moveTo(px - arm, py); g.lineTo(px + arm, py); g.moveTo(px, py - arm); g.lineTo(px, py + arm); g.stroke();
         }
@@ -170,7 +176,7 @@ window.Statement = function Statement(section) {
     }
 
     // the dot field
-    const base = sp * 0.52, cap = sp - 1;                // magnified dots keep a 1px gap
+    const base = dot, cap = Math.min(cx, cy) - 1;        // magnified dots keep a 1px gap
     const R = Math.max(60, sp * 6);
     const reveal = revealAt ? (now - revealAt) / 900 : 0;
     let found = 0;
