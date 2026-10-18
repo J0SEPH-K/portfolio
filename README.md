@@ -9,21 +9,6 @@ Portfolio hub plus three live frontend demos, built with an agentic (Claude Code
 
 Static site, no build step. All data is fictional sample data.
 
-## Business style portfolio
-
-The `portfolio01/` through `portfolio08/` directories are independent, no-build style pages for local-business MVP pitches:
-
-1. Precision Systems — industrial and technical B2B
-2. Calm Care — wellness and personal care
-3. Quiet Atelier — boutique craft and beauty
-4. Local Hospitality — cafés, bakeries, and restaurants
-5. Human Performance — fitness and sports
-6. Digital Product — software and digital services
-7. Family Learning — academies and education
-8. Home & Field Service — cleaning, repair, and installation
-
-The pages are intentionally separate so each can be shown as a focused visual direction during a sales conversation.
-
 ## Credits
 
 The domain-map section re-implements the scroll behaviour of [Turion Space](https://www.turionspace.com)'s mission diagram
